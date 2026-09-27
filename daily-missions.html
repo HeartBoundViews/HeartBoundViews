@@ -173,11 +173,10 @@
     </div>
   </div>
 
-  <!-- Countdown -->
+    <!-- Countdown -->
   <section class="relative z-10 max-w-4xl mx-auto px-4 mb-10 fade-up fade-up-d1">
     <div class="cd-box p-5 sm:p-8 text-center">
-      <p id="cd-badge" class="inline-block bg-red-950/80 border border-red-800/60 rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wider text-red-300 mb-3">Countdown</p>
-      <p id="cd-title" class="text-gray-400 text-sm md:text-base mb-6 px-1"></p>
+      <p id="cd-badge" class="inline-block bg-red-950/80 border border-red-800/60 rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold tracking-wider text-red-300 mb-4">Countdown</p>
 
       <div id="cd-units" class="grid grid-cols-4 gap-1.5 sm:gap-3 max-w-lg mx-auto">
         <div class="unit px-1 py-2.5 sm:px-3 sm:py-4">
@@ -198,11 +197,10 @@
         </div>
       </div>
 
-      <div id="cd-done" class="hidden mt-6">
+      <div id="cd-done" class="hidden mt-2">
         <a id="cd-watch-btn" href="#" target="_blank" rel="noopener" class="watch-btn">
           Watch now →
         </a>
-        <p class="mt-3 text-sm text-gray-400">Episode is live. Click to watch on the official platform.</p>
       </div>
     </div>
   </section>
@@ -241,7 +239,7 @@
   <script>
     function pad(n) { return String(n).padStart(2, "0"); }
 
-    function startCountdown(iso, watchUrl) {
+        function startCountdown(iso, watchUrl) {
       var target = new Date(iso).getTime();
       var dEl = document.getElementById("cd-d");
       var hEl = document.getElementById("cd-h");
@@ -250,6 +248,7 @@
       var units = document.getElementById("cd-units");
       var done = document.getElementById("cd-done");
       var watchBtn = document.getElementById("cd-watch-btn");
+      var badge = document.getElementById("cd-badge");
 
       if (watchUrl) {
         watchBtn.href = watchUrl;
@@ -265,6 +264,7 @@
         units.classList.add("hidden");
         done.classList.remove("hidden");
         dEl.innerText = hEl.innerText = mEl.innerText = sEl.innerText = "00";
+        if (badge) badge.innerText = "EPISODE 1 IS OUT NOW";
       }
 
       function showCountdown() {
@@ -299,8 +299,8 @@
         var dm = data.dailyMissions || {};
         var cd = dm.countdown || {};
 
-        document.getElementById("cd-badge").innerText = cd.badge || "COUNTDOWN";
-        document.getElementById("cd-title").innerText = cd.title || "";
+               document.getElementById("cd-badge").innerText = cd.badge || "COUNTDOWN";
+        // không set cd-title nữa
 
         if (cd.target) {
           startCountdown(cd.target, cd.watchUrl || "");
