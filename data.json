@@ -1,26 +1,124 @@
 {
-  "episodes": {
+   "episodes": {
     "1": [
-      {
-        "name": "Generator 1",
-        "title": "Santa Scribe X",
-        "url": "https://santa-scribe-x.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-      },
-      {
-        "name": "Generator 2",
-        "title": "Clinic Comment Engine",
-        "url": "https://clinic-comment-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-      },
-      {
-        "name": "Generator 3",
-        "title": "Luxe Comment Forge",
-        "url": "https://luxe-comment-forge.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-      },
-      {
-        "name": "Generator 4",
-        "title": "Streetwise Copy Engine",
-        "url": "https://streetwise-copy-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-      }
+      { "name": "Generator 1", "url": "https://santa-scribe-x.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
+      { "name": "Generator 2", "url": "https://clinic-comment-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
+      { "name": "Generator 3", "url": "https://luxe-comment-forge.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
+      { "name": "Generator 4", "url": "https://streetwise-copy-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "2": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "3": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "4": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "5": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "6": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "7": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "8": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "9": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
+    ],
+    "10": [
+      { "name": "Generator 1", "url": "#" },
+      { "name": "Generator 2", "url": "#" },
+      { "name": "Generator 3", "url": "#" },
+      { "name": "Generator 4", "url": "#" },
+      { "name": "Generator 5", "url": "#" },
+      { "name": "Generator 6", "url": "#" },
+      { "name": "Generator 7", "url": "#" },
+      { "name": "Generator 8", "url": "#" },
+      { "name": "Generator 9", "url": "#" },
+      { "name": "Generator 10", "url": "#" }
     ]
   },
   "youtube": [
