@@ -13,7 +13,12 @@
     body { font-family: Inter, system-ui, sans-serif; color: #fff; }
 
     .title-serif { font-family: "Cormorant Garamond", Georgia, serif; }
-    .script-font { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; }
+       .script-font {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
 
     /* subtle fade-in */
     @keyframes fadeUp {
@@ -25,13 +30,13 @@
     .fade-up-d2 { animation-delay: 0.16s; }
     .fade-up-d3 { animation-delay: 0.24s; }
 
-    /* EP buttons */
+   /* EP buttons */
     .ep-btn {
       width: 3.25rem; height: 3.25rem;
       border-radius: 0.75rem;
       border: 1px solid #3f3f46;
-      background: #18181b;
-      color: #a1a1aa;
+      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
+      color: #d4d4d8;
       font-size: 0.8rem; font-weight: 600;
       transition: all 0.25s ease;
       display: flex; align-items: center; justify-content: center;
@@ -42,15 +47,15 @@
     .ep-btn:hover {
       border-color: #ef4444;
       color: #fff;
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+      background: linear-gradient(145deg, #450a0a 0%, #1c0909 50%, #0c0c0c 100%);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
     }
     .ep-btn.active {
       border-color: #ef4444;
       color: #fff;
-      box-shadow: 0 0 0 1px #ef4444, 0 0 16px rgba(239, 68, 68, 0.35);
-      background: #1c0909;
+      background: linear-gradient(145deg, #7f1d1d 0%, #1c0909 55%, #0a0a0a 100%);
+      box-shadow: 0 0 0 1px #ef4444, 0 0 18px rgba(239, 68, 68, 0.4);
     }
-
     /* Generator cards */
     .gen-card {
       aspect-ratio: 1;
@@ -70,8 +75,8 @@
 
     /* Guide platform cards */
     .guide-card {
-      background: linear-gradient(180deg, #18181b 0%, #121212 100%);
-      border: 1px solid #27272a;
+      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
+      border: 1px solid #3f1a1a;
       border-radius: 1rem;
       padding: 1.25rem 0.75rem;
       text-align: center;
@@ -83,26 +88,17 @@
       content: "";
       position: absolute; left: 20%; right: 20%; bottom: 0;
       height: 2px;
-      background: #ef4444;
-      opacity: 0.5;
+      background: linear-gradient(90deg, transparent, #ef4444, transparent);
+      opacity: 0.7;
       transition: opacity 0.3s;
     }
     .guide-card:hover {
-      border-color: #7f1d1d;
+      border-color: #991b1b;
       transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.18);
+      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
+      background: linear-gradient(165deg, #450a0a 0%, #1a0a0a 45%, #0a0a0a 100%);
     }
     .guide-card:hover::after { opacity: 1; }
-
-    .icon-box {
-      width: 3rem; height: 3rem;
-      margin: 0 auto 0.75rem;
-      border-radius: 0.75rem;
-      background: #0a0a0a;
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid #27272a;
-    }
-
     /* soft red glow corners */
     .page-glow {
       pointer-events: none;
@@ -130,11 +126,11 @@
         </h1>
         <p class="text-gray-400 text-sm mt-3">Select an episode to view generators</p>
       </div>
-      <div class="hidden sm:block text-right fade-up fade-up-d1 pt-1">
-        <p class="script-font text-lg text-white/80 leading-snug">
-          Together<br>We Make<br>It Happen
+            <div class="hidden sm:block text-right fade-up fade-up-d1 pt-2">
+        <p class="script-font text-base md:text-lg text-white/70 tracking-wide font-light whitespace-nowrap">
+          Together We Make It Happen
         </p>
-        <div class="ml-auto mt-1 w-16 h-0.5 bg-red-500/70 rounded-full"></div>
+        <div class="ml-auto mt-1.5 w-20 h-px bg-red-500/60 rounded-full"></div>
       </div>
     </div>
   </div>
