@@ -227,18 +227,9 @@
         "subtitle": "สุดทางหัวใจ • GMMTV 2026",
         "poster": "images/poster-heartbound.jpg",
         "platforms": [
-          {
-            "name": "YouTube",
-            "url": "https://www.youtube.com/watch?v=I1guVkLJ4mU"
-          },
-          {
-            "name": "GMMTV",
-            "url": "https://www.youtube.com/@GMMTV"
-          },
-          {
-            "name": "Viki",
-            "url": ""
-          }
+          { "name": "YouTube", "url": "https://www.youtube.com/watch?v=I1guVkLJ4mU" },
+          { "name": "GMMTV", "url": "https://www.youtube.com/@GMMTV" },
+          { "name": "Viki", "url": "" }
         ]
       },
       {
@@ -247,14 +238,8 @@
         "subtitle": "รักครูเท่าโลกเลย",
         "poster": "images/poster-lyt.jpg",
         "platforms": [
-          {
-            "name": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PLbCPyl0slhQ0"
-          },
-          {
-            "name": "Viki",
-            "url": ""
-          }
+          { "name": "YouTube", "url": "https://www.youtube.com/playlist?list=PLbCPyl0slhQ0" },
+          { "name": "Viki", "url": "" }
         ]
       },
       {
@@ -263,38 +248,17 @@
         "subtitle": "สายรหัสเทวดา",
         "poster": "images/poster-p10.jpg",
         "platforms": [
-          {
-            "name": "Viki",
-            "url": ""
-          },
-          {
-            "name": "YouTube",
-            "url": "https://www.youtube.com/playlist?list=PLORti3QNeLic"
-          }
+          { "name": "Viki", "url": "" },
+          { "name": "YouTube", "url": "https://www.youtube.com/playlist?list=PLORti3QNeLic" }
         ]
       }
     ],
     "ratings": [
-      {
-        "name": "IMDb",
-        "url": "https://www.imdb.com/find/?q=Heartbound%20GMMTV"
-      },
-      {
-        "name": "MDL",
-        "url": "https://mydramalist.com/811560-heartbound"
-      },
-      {
-        "name": "TMDB",
-        "url": "https://www.themoviedb.org/search?query=Heartbound"
-      },
-      {
-        "name": "Viki",
-        "url": "https://www.viki.com/"
-      },
-      {
-        "name": "iQIYI",
-        "url": "https://www.iq.com/"
-      }
+      { "name": "IMDb", "url": "https://www.imdb.com/find/?q=Heartbound%20GMMTV" },
+      { "name": "MDL", "url": "https://mydramalist.com/811560-heartbound" },
+      { "name": "TMDB", "url": "https://www.themoviedb.org/search?query=Heartbound" },
+      { "name": "Viki", "url": "https://www.viki.com/" },
+      { "name": "iQIYI", "url": "https://www.iq.com/" }
     ]
   },
   "instagram": [
@@ -309,10 +273,7 @@
       "comment": 25000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://urban-comment-craft.lovable.app/"
-        }
+        { "name": "Generator 1", "url": "https://urban-comment-craft.lovable.app/" }
       ]
     },
     {
@@ -326,10 +287,7 @@
       "comment": 25000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://streetwise-copy-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-        }
+        { "name": "Generator 1", "url": "https://streetwise-copy-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4" }
       ]
     },
     {
@@ -343,10 +301,7 @@
       "comment": 25000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://clinic-comment-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-        }
+        { "name": "Generator 1", "url": "https://clinic-comment-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4" }
       ]
     },
     {
@@ -360,10 +315,7 @@
       "comment": 25000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://amber-glow-reel.lovable.app/"
-        }
+        { "name": "Generator 1", "url": "https://amber-glow-reel.lovable.app/" }
       ]
     },
     {
@@ -377,10 +329,7 @@
       "comment": 30000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://santa-scribe-x.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-        }
+        { "name": "Generator 1", "url": "https://santa-scribe-x.lovable.app/?utm_id=97760_v0_s00_e0_tv4" }
       ]
     },
     {
@@ -394,10 +343,7 @@
       "comment": 25000,
       "share": 1500000,
       "generators": [
-        {
-          "name": "Generator 1",
-          "url": "https://luxe-comment-forge.lovable.app/?utm_id=97760_v0_s00_e0_tv4"
-        }
+        { "name": "Generator 1", "url": "https://luxe-comment-forge.lovable.app/?utm_id=97760_v0_s00_e0_tv4" }
       ]
     }
   ],
@@ -448,7 +394,7 @@
         "fullname": "Tanapon Sukumpantanasan",
         "thaiName": "ธนพนธ์ สุขุมพันธนาสาร",
         "role": "Actor • Singer • Rocker",
-        "photo": "perthrockstar.jpg",
+        "photo": "perthrocker.jpg",
         "born": "20 March 2001",
         "agency": "GMMTV",
         "socials": [
@@ -496,8 +442,8 @@
             "date": "27 Sep",
             "title": "GrabFood Payweek ถูกกว่าชัวร์* กับ Perth Santa",
             "note": "18:00 ICT",
+            "hastag": "GrabFoodถูกกว่าชัวร์xPERTHSANTA",
             "keyword": "GRABFOOD WITH PERTHSANTA"
-            "hastag": "GrabFoodถูกกว่าชัวร์xPERTHSANTA"
           }
         ]
       }
