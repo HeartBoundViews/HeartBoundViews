@@ -1,5 +1,5 @@
 {
-   "episodes": {
+  "episodes": {
     "1": [
       { "name": "Generator 1", "url": "https://santa-scribe-x.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
       { "name": "Generator 2", "url": "https://clinic-comment-engine.lovable.app/?utm_id=97760_v0_s00_e0_tv4" },
@@ -441,7 +441,7 @@
     }
   ],
   "introduce": {
-      "profiles": [
+    "profiles": [
       {
         "id": "PERTH",
         "name": "PERTH",
@@ -497,8 +497,7 @@
             "title": "GrabFood Payweek ถูกกว่าชัวร์* กับ Perth Santa",
             "note": "18:00 ICT",
             "hastag": "GrabFoodถูกกว่าชัวร์xPERTHSANTA",
-            "keyword": "GRABFOOD WITH PERTHSANTA",
-            "location": "Facebook & YouTube : GMMTV", "Facebook : GrabTH"
+            "keyword": "GRABFOOD WITH PERTHSANTA"
           }
         ]
       }
