@@ -11,7 +11,7 @@
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
     .polaroid {
       background: #f4efe6;
-      padding: 12px 12px 36px;
+      padding: 10px 10px 0;
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
     }
     .polaroid img {
@@ -19,14 +19,31 @@
       aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center;
-      background: #1a1a1a;
+      background: #ece7de;
       display: block;
+    }
+    .polaroid .pola-caption {
+      padding: 12px 8px 16px;
+      text-align: center;
+      color: #1a1a1a;
+    }
+    .polaroid .pola-caption strong {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .polaroid .pola-caption span {
+      display: block;
+      margin-top: 2px;
+      font-size: 0.78rem;
+      color: #4b4b4b;
     }
     .polaroid-lg {
       background: #f4efe6;
       max-width: 280px;
       margin: 0 auto 8px;
-      padding: 14px 14px 42px;
+      padding: 12px 12px 0;
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
       transform: rotate(-1.5deg);
     }
@@ -35,8 +52,24 @@
       aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center;
-      background: #1a1a1a;
+      background: #ece7de;
       display: block;
+    }
+    .polaroid-lg .pola-caption {
+      padding: 14px 8px 18px;
+      text-align: center;
+      color: #1a1a1a;
+    }
+    .polaroid-lg .pola-caption strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .polaroid-lg .pola-caption span {
+      display: block;
+      margin-top: 3px;
+      font-size: 0.82rem;
+      color: #4b4b4b;
     }
   </style>
 </head>
@@ -148,13 +181,13 @@
       (introData.profiles || []).forEach(function (p, i) {
         const el = document.createElement("button");
         el.type = "button";
-        el.className = "card bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden text-left";
+        el.className = "card bg-transparent border-0 text-left p-1";
         el.onclick = function () { showProfile(i); };
         el.innerHTML =
-          '<div class="p-4 pb-2"><div class="polaroid"><img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '"></div></div>' +
-          '<div class="px-4 pb-4">' +
-            '<h3 class="text-xl font-bold">' + (p.name || "") + "</h3>" +
-            '<p class="text-base text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
+          '<div class="polaroid">' +
+            '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '">' +
+            '<div class="pola-caption"><strong>' + (p.name || "") + "</strong>" +
+            "<span>" + (p.fullname || "") + "</span></div>" +
           "</div>";
         box.appendChild(el);
       });
@@ -170,7 +203,11 @@
       document.getElementById("detail-name").innerText = p.name || "Profile";
       document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
       document.getElementById("detail-box").innerHTML =
-        '<div class="polaroid-lg"><img src="' + (p.photo || "") + '" alt=""></div>' +
+        '<div class="polaroid-lg">' +
+          '<img src="' + (p.photo || "") + '" alt="">' +
+          '<div class="pola-caption"><strong>' + (p.name || "") + "</strong>" +
+          "<span>" + (p.fullname || "") + "</span></div>" +
+        "</div>" +
         '<p class="text-base text-gray-400 mb-1 mt-6">Full name</p>' +
         '<p class="text-xl font-semibold mb-4">' + (p.fullname || p.name || "—") + "</p>" +
         '<p class="text-base text-gray-400 mb-1">Thai name</p>' +
