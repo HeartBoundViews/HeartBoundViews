@@ -6,12 +6,8 @@
   <title>Heartbound Series Trends - PerthSanta Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      min-height: 100vh;
-      background: #070707;
-      position: relative;
-    }
-    /* Ảnh nền mờ */
+    body { background: #070707; min-height: 100vh; position: relative; }
+    /* Nền ảnh mờ */
     body::before {
       content: "";
       position: fixed;
@@ -19,9 +15,8 @@
       z-index: -1;
       background: url("images/poster-heartbound.jpg") center center / cover no-repeat;
       filter: blur(14px) brightness(0.35);
-      transform: scale(1.1); /* tránh mép trắng khi blur */
+      transform: scale(1.1);
     }
-    /* Lớp phủ tối nhẹ để chữ dễ đọc */
     body::after {
       content: "";
       position: fixed;
@@ -40,7 +35,7 @@
   </div>
 
   <div id="episode-list" class="max-w-4xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-10">
-    <button type="button" onclick="showGenerators('1')" class="card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]">
+    <button type="button" onclick="showGenerators('1')" class="card bg-zinc-900 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]">
       <p class="text-red-500 text-sm mb-1">EP</p>
       <p class="text-2xl font-bold">1</p>
     </button>
@@ -58,31 +53,31 @@
     <h2 class="text-xl font-bold mb-1">Guide Trending</h2>
     <p class="text-gray-400 text-sm mb-4">How to trend Heartbound on each platform.</p>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-      <a href="guide-x.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+      <a href="guide-x.html" class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
         <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
           <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" class="w-7 h-7">
         </div>
         <p class="text-lg font-bold">X</p>
       </a>
-      <a href="guide-instagram.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+      <a href="guide-instagram.html" class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
         <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
           <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" class="w-7 h-7">
         </div>
         <p class="text-lg font-bold">Instagram</p>
       </a>
-      <a href="guide-tiktok.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+      <a href="guide-tiktok.html" class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
         <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
           <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok" class="w-7 h-7">
         </div>
         <p class="text-lg font-bold">TikTok</p>
       </a>
-      <a href="guide-facebook.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+      <a href="guide-facebook.html" class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
         <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
           <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" class="w-7 h-7">
         </div>
         <p class="text-lg font-bold">Facebook</p>
       </a>
-      <a href="guide-youtube.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+      <a href="guide-youtube.html" class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
         <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
           <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" class="w-7 h-7">
         </div>
@@ -109,7 +104,7 @@
       eps.forEach(function (ep) {
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]";
+        btn.className = "card bg-zinc-900 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]";
         btn.innerHTML = '<p class="text-red-500 text-sm mb-1">EP</p><p class="text-2xl font-bold">' + ep + "</p>";
         btn.onclick = function () { showGenerators(ep); };
         container.appendChild(btn);
@@ -132,7 +127,7 @@
         a.href = gen.url;
         a.target = "_blank";
         a.rel = "noopener";
-        a.className = "card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 hover:border-red-500 block";
+        a.className = "card bg-zinc-900 border border-zinc-700 rounded-xl p-5 hover:border-red-500 block";
         a.innerHTML = '<p class="text-red-500 text-sm mb-1">' + gen.name + '</p><p class="font-medium">' + gen.title + '</p><p class="text-xs text-gray-500 mt-2">Click to open →</p>';
         container.appendChild(a);
       });
