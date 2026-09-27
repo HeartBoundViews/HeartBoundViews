@@ -342,4 +342,68 @@
       "done": false
     }
   ]
+  ],
+  "introduce": {
+    "profiles": [
+      {
+        "id": "perth",
+        "name": "Perth",
+        "fullname": "Tanapon Sukumpantanasan",
+        "thaiName": "ธนพนธ์ สุขุมพันธนาสาร",
+        "role": "Actor • Singer",
+        "photo": "images/Perth.jpg",
+        "born": "20 March 2001",
+        "agency": "GMMTV",
+        "about": "Thai actor and singer. Known as Ae in Love by Chance, Yotha in Perfect 10 Liners, and Gun De Castro in Heartbound.",
+        "socials": [
+          {
+            "name": "Instagram",
+            "url": "https://www.instagram.com/perthppe/"
+          }
+        ]
+      },
+      {
+        "id": "santa",
+        "name": "Santa",
+        "fullname": "Pongsapak Udompoch",
+        "thaiName": "พงศภัค อุดมโภชน์",
+        "role": "Actor • Singer • Dancer",
+        "photo": "images/Santa.jpg",
+        "born": "3 November 2003",
+        "agency": "GMMTV",
+        "about": "Thai actor and singer. Known as Gun in Perfect 10 Liners and Ai Aiyara in Heartbound. Member of JASP.ER.",
+        "socials": [
+          {
+            "name": "Instagram",
+            "url": "https://www.instagram.com/santa.pp/"
+          }
+        ]
+      },
+      {
+        "id": "domiia",
+        "name": "Domiia",
+        "fullname": "Official mascot of PerthSanta",
+        "thaiName": "โดเมีย",
+        "role": "Mascot",
+        "photo": "images/logo.png",
+        "born": "12 January 2025",
+        "agency": "PerthSanta",
+        "about": "Official mascot of the PerthSanta pairing.",
+        "socials": []
+      }
+    ],
+    "schedule": [
+      {
+        "month": "September 2026",
+        "items": [
+          {
+            "date": "26 Sep",
+            "title": "Heartbound EP.1",
+            "note": "20:30 ICT"
+          }
+        ]
+      }
+    ],
+    "infJobUrl": "https://example.com"
+  }
 }
