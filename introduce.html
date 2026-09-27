@@ -256,4 +256,123 @@
           cls: "text-white"
         },
         TikTok: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3c.2 2.6 1.6 4.4 4.2 4.7v2.6c-1.4 0-2.7-.4-4.1-1.3v6.7c0 3.4-2.6 6.1-6.1 6.1S2.4 
+          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3c.2 2.6 1.6 4.4 4.2 4.7v2.6c-1.4 0-2.7-.4-4.1-1.3v6.7c0 3.4-2.6 6.1-6.1 6.1S2.4 19.1 2.4 15.6 5 9.5 8.5 9.5c.4 0 .8 0 1.1.1v2.8c-.3-.1-.7-.2-1.1-.2-2 0-3.6 1.6-3.6 3.6s1.6 3.6 3.6 3.6 3.6-1.6 3.6-3.6V3h2.4z"/></svg>',
+          cls: "bg-black hover:bg-zinc-800 text-white border border-zinc-700"
+        }
+      };
+
+      return (p.socials || []).filter(function (s) { return s.url; }).map(function (s) {
+        var item = icons[s.name] || { svg: s.name, cls: "bg-zinc-800 text-white border border-zinc-700" };
+        var extra = "";
+        if (s.name === "IG" || s.name === "Instagram") {
+          extra = ' style="background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)"';
+        } else if (s.name === "TikTok") {
+          extra = ' style="box-shadow: 2px 0 0 #25F4EE, -2px 0 0 #FE2C55"';
+        }
+        return '<a href="' + s.url + '" target="_blank" rel="noopener" title="' + s.name + '" class="inline-flex items-center justify-center w-11 h-11 rounded-full ' + item.cls + '"' + extra + ">" + item.svg + "</a>";
+      }).join("") || '<span class="text-sm text-gray-500">No links yet</span>';
+    }
+
+    function hideAll() {
+      document.getElementById("intro-home").classList.add("hidden");
+      document.getElementById("intro-detail").classList.add("hidden");
+      document.getElementById("intro-schedule").classList.add("hidden");
+    }
+
+    function renderProfiles() {
+      var box = document.getElementById("profile-list");
+      box.innerHTML = "";
+      (introData.profiles || []).forEach(function (p, i) {
+        var el = document.createElement("button");
+        el.type = "button";
+        el.className = "profile-card";
+        el.onclick = function () { showProfile(i); };
+        el.innerHTML =
+          '<div class="photo-frame"><img src="' + photoSrc(p) + '" alt="' + (p.name || "") + '"></div>' +
+          '<div class="p-4">' +
+            '<h3 class="text-lg sm:text-xl font-bold text-zinc-100">' + (p.name || "") + "</h3>" +
+            '<p class="text-sm text-gray-400 truncate mt-0.5">' + (p.fullname || "") + "</p>" +
+          "</div>";
+        box.appendChild(el);
+      });
+    }
+
+    function showProfile(i) {
+      var list = introData.profiles || [];
+      if (!list[i]) return;
+      currentIndex = i;
+      var p = list[i];
+      hideAll();
+      document.getElementById("intro-detail").classList.remove("hidden");
+      document.getElementById("detail-name").innerText = p.name || "Profile";
+      document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
+      document.getElementById("detail-box").innerHTML =
+        '<div class="photo-frame-lg"><img src="' + photoSrc(p) + '" alt=""></div>' +
+        '<p class="text-sm text-gray-400 mb-1 mt-6">Full name</p>' +
+        '<p class="text-lg font-semibold mb-4 text-zinc-100">' + (p.fullname || p.name || "—") + "</p>" +
+        '<p class="text-sm text-gray-400 mb-1">Thai name</p>' +
+        '<p class="text-lg font-semibold mb-4 text-zinc-100">' + (p.thaiName || "—") + "</p>" +
+        '<p class="text-sm text-gray-400 mb-1">Role</p>' +
+        '<p class="text-lg font-semibold mb-4 text-zinc-100">' + (p.role || "—") + "</p>" +
+        '<p class="text-sm text-gray-400 mb-1">Birthday</p>' +
+        '<p class="text-lg font-semibold mb-4 text-zinc-100">' + (p.born || "—") + "</p>" +
+        '<p class="text-sm text-gray-400 mb-1">Agency</p>' +
+        '<p class="text-lg font-semibold mb-5 text-zinc-100">' + (p.agency || "—") + "</p>" +
+        '<p class="text-sm text-gray-400 mb-2">Socials</p>' +
+        '<div class="flex flex-wrap gap-3">' + socialLinks(p) + "</div>";
+    }
+
+    function prevProfile() {
+      if (currentIndex > 0) showProfile(currentIndex - 1);
+      else backToHome();
+    }
+
+    function nextProfile() {
+      if (currentIndex < (introData.profiles || []).length - 1) {
+        showProfile(currentIndex + 1);
+      }
+    }
+
+    function tagText(v) {
+      if (!v) return "";
+      return String(v).charAt(0) === "#" ? v : "#" + v;
+    }
+
+    function showSchedule() {
+      hideAll();
+      document.getElementById("intro-schedule").classList.remove("hidden");
+      var box = document.getElementById("schedule-box");
+      box.innerHTML = "";
+      (introData.schedule || []).forEach(function (m) {
+        var items = (m.items || []).map(function (it) {
+          var hash = it.hashtag || it.hastag || "";
+          var keyw = it.keyword || "";
+          var loc = it.location || "";
+          var extra = "";
+          if (loc) extra += '<p class="text-sm text-gray-400 mt-1.5 break-all">📍 ' + loc + "</p>";
+          if (keyw) extra += '<p class="text-sm text-gray-300 mt-1.5 break-all">🔑 ' + keyw + "</p>";
+          if (hash) extra += '<p class="text-sm text-red-400 mt-1 break-all">' + tagText(hash) + "</p>";
+          return '<div class="py-4 border-b border-zinc-800/80 last:border-0">' +
+            '<div class="flex gap-4">' +
+              '<p class="w-24 sm:w-28 text-red-400 text-sm sm:text-base shrink-0 font-medium">' + (it.date || "") + "</p>" +
+              '<div class="min-w-0">' +
+                '<p class="text-base sm:text-lg font-medium text-zinc-100">' + (it.title || "") + "</p>" +
+                '<p class="text-sm text-gray-400 mt-0.5">' + (it.note || "") + "</p>" +
+                extra +
+              "</div>" +
+            "</div></div>";
+        }).join("");
+        var el = document.createElement("div");
+        el.className = "panel-box mb-4";
+        el.innerHTML = '<h3 class="text-lg sm:text-xl font-bold text-zinc-100 mb-2">' + (m.month || "") + "</h3>" + items;
+        box.appendChild(el);
+      });
+    }
+
+    function backToHome() {
+      hideAll();
+      document.getElementById("intro-home").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
