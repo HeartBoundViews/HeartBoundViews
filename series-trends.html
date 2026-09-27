@@ -133,6 +133,14 @@
 </head>
 <body class="text-white relative overflow-x-hidden">
 
+  <!-- Background image mờ -->
+  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <img src="images/hero-perthsanta.jpg" alt=""
+         class="w-full h-full object-cover opacity-25"
+         style="filter: blur(24px) brightness(0.5) saturate(0.85); transform: scale(1.08);">
+    <div class="absolute inset-0 bg-[#070707]/65"></div>
+  </div>
+
   <!-- soft background glows -->
   <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
   <div class="page-glow bg-red-800" style="bottom:10%;left:-80px;"></div>
@@ -274,7 +282,7 @@
 
       for (var i = 1; i <= TOTAL_GENS; i++) {
         var gen = list[i - 1] || {};
-        var name = gen.name || ("Gen " + i);
+        var name = "Gen " + i;
         var url = gen.url || "#";
 
         var a = document.createElement("a");
@@ -298,17 +306,4 @@
     }
   </script>
 </body>
-  <body class="text-white relative overflow-x-hidden">
-
-  <!-- Background image mờ -->
-  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-    <img src="images/hero-perthsanta.jpg" alt=""
-         class="w-full h-full object-cover opacity-20"
-         style="filter: blur(28px) brightness(0.45) saturate(0.8); transform: scale(1.1);">
-    <div class="absolute inset-0 bg-[#070707]/70"></div>
-  </div>
-
-  <!-- soft background glows (giữ nguyên) -->
-  <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
-  ...
 </html>
