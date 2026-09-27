@@ -192,7 +192,7 @@
 
   const bar = document.createElement("header");
   bar.className = "sticky top-0 z-50 border-b border-zinc-800/80 bg-black/90 backdrop-blur-md";
-  bar.innerHTML =
+   bar.innerHTML =
     '<div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-3">' +
       '<a href="index.html" class="flex items-center gap-2.5 min-w-0 shrink-0">' +
         '<img src="images/logo.png" alt="Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover bg-zinc-800 border border-zinc-700" onerror="this.style.display=\'none\'">' +
@@ -203,30 +203,31 @@
       '<a href="introduce.html" class="px-3 py-1.5 rounded-full text-sm border border-zinc-600 text-zinc-200 hover:border-red-500 hover:text-white font-medium" data-i18n="navIntro">' +
         (t.navIntro || "Intro") +
       "</a>" +
+      /* ===== Nút Missions nhỏ (cỡ EN) ===== */
+      '<div id="ps-alert-wrap" class="hidden relative">' +
+        '<button type="button" id="ps-alert-btn" class="ps-alert-blink flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-sm border border-red-700 bg-red-950 text-red-200 hover:bg-red-900 hover:text-white font-medium cursor-pointer transition">' +
+          '<span class="inline-block w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span>' +
+          '<span class="hidden sm:inline">Missions</span>' +
+          '<span id="ps-alert-count" class="px-1.5 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold leading-none">0</span>' +
+        "</button>" +
+        '<div id="ps-alert-panel" class="absolute right-0 top-full mt-2 w-72 sm:w-80 rounded-xl border border-zinc-700 bg-zinc-950 shadow-xl z-50 hidden">' +
+          '<div class="px-3 py-2.5">' +
+            '<div class="flex items-center justify-between mb-2">' +
+              '<p class="text-xs text-gray-400">Unfinished missions</p>' +
+              '<button type="button" id="ps-alert-close" class="text-xs text-red-400 hover:text-red-300">' + (t.alertClose || "Close") + "</button>" +
+            "</div>" +
+            '<ul id="ps-alert-list" class="space-y-1.5 max-h-64 overflow-y-auto"></ul>' +
+          "</div>" +
+        "</div>" +
+      "</div>" +
+      /* ===== EN ===== */
       '<select id="language" onchange="psChangeLanguage()" class="bg-zinc-950 border border-zinc-600 text-white text-sm rounded-full px-2.5 py-1.5 font-medium">' +
         '<option value="en">EN</option>' +
         '<option value="vi">VI</option>' +
         '<option value="th">TH</option>' +
         '<option value="my">MY</option>' +
       "</select>" +
-    "</div>" +
-    '<div id="ps-alert-wrap" class="hidden border-t border-red-900/50 bg-red-950/90">' +
-      '<button type="button" id="ps-alert-btn" class="w-full max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-center gap-2 text-sm sm:text-base text-red-100 ps-alert-blink cursor-pointer hover:bg-red-900/40 transition">' +
-        '<span class="inline-block w-2 h-2 rounded-full bg-red-400 shrink-0"></span>' +
-        '<span id="ps-alert-label">' + (t.alertText || "") + "</span>" +
-        '<span id="ps-alert-count" class="ml-1 px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold">0</span>' +
-      "</button>" +
-      '<div id="ps-alert-panel" class="border-t border-red-900/40 bg-zinc-950">' +
-        '<div class="max-w-6xl mx-auto px-3 sm:px-4 py-3">' +
-          '<div class="flex items-center justify-between mb-2">' +
-            '<p class="text-sm text-gray-400">Unfinished missions</p>' +
-            '<button type="button" id="ps-alert-close" class="text-sm text-red-400 hover:text-red-300">' + (t.alertClose || "Close") + "</button>" +
-          "</div>" +
-          '<ul id="ps-alert-list" class="space-y-2"></ul>' +
-        "</div>" +
-      "</div>" +
     "</div>";
-
   document.body.insertBefore(bar, document.body.firstChild);
   document.getElementById("language").value = lang;
   window.psApplyLang(lang);
