@@ -29,10 +29,53 @@
       letter-spacing: 0.22em;
       text-shadow: 0 2px 12px rgba(0,0,0,.7);
     }
-    .menu-row { transition: background 0.2s ease, border-color 0.2s ease; }
-    .menu-row:active { background: rgba(39, 39, 42, 0.9); }
+
+    /* 4 ô nhiệm vụ — style series-trends */
+    .menu-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
+      border: 1px solid #3f1a1a;
+      border-radius: 1rem;
+      padding: 0.9rem 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-row::after {
+      content: "";
+      position: absolute;
+      left: 20%; right: 20%; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ef4444, transparent);
+      opacity: 0.6;
+    }
+    .menu-row:hover {
+      border-color: #991b1b;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
+      background: linear-gradient(165deg, #450a0a 0%, #1a0a0a 45%, #0a0a0a 100%);
+    }
+    .menu-row:hover::after { opacity: 1; }
+    .menu-row:active {
+      transform: translateY(-1px);
+    }
+    .menu-icon {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.75rem;
+      background: #0a0a0a;
+      border: 1px solid #3f1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #f87171;
+    }
     @media (min-width: 640px) {
-      .menu-row:hover { border-color: rgba(185, 28, 28, 0.5); background: rgba(24, 24, 27, 0.95); }
+      .menu-row { padding: 1.1rem 1.25rem; }
+      .menu-icon { width: 3rem; height: 3rem; }
     }
   </style>
 </head>
@@ -40,7 +83,7 @@
 
   <main class="max-w-6xl mx-auto px-4 pt-3 sm:pt-4 pb-6">
 
-       <!-- HERO -->
+    <!-- HERO -->
     <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-3 sm:mb-4 h-[200px] sm:h-[300px] md:h-[380px]">
       <img src="images/hero-perthsanta.jpg" alt="PerthSanta" class="hero-img absolute inset-0">
       <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-black/20"></div>
@@ -63,11 +106,11 @@
         @jammyjellyjam
       </a>
     </div>
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 
-      <a href="series-trends.html" class="menu-row flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3.5 sm:p-5">
-        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 flex items-center justify-center shrink-0 text-red-400">
+      <a href="series-trends.html" class="menu-row">
+        <div class="menu-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
         <div class="min-w-0 flex-1">
@@ -77,8 +120,8 @@
         <span class="text-red-500 text-xl shrink-0">›</span>
       </a>
 
-      <a href="daily-missions.html" class="menu-row flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3.5 sm:p-5">
-        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 flex items-center justify-center shrink-0 text-red-400">
+      <a href="daily-missions.html" class="menu-row">
+        <div class="menu-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
         </div>
         <div class="min-w-0 flex-1">
@@ -88,8 +131,8 @@
         <span class="text-red-500 text-xl shrink-0">›</span>
       </a>
 
-      <a href="youtube-streaming.html" class="menu-row flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3.5 sm:p-5">
-        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 flex items-center justify-center shrink-0 text-red-400">
+      <a href="youtube-streaming.html" class="menu-row">
+        <div class="menu-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>
         </div>
         <div class="min-w-0 flex-1">
@@ -99,8 +142,8 @@
         <span class="text-red-500 text-xl shrink-0">›</span>
       </a>
 
-      <a href="ig-engagement.html" class="menu-row flex items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900/80 px-4 py-3.5 sm:p-5">
-        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-red-950/80 flex items-center justify-center shrink-0 text-red-400">
+      <a href="ig-engagement.html" class="menu-row">
+        <div class="menu-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
         </div>
         <div class="min-w-0 flex-1">
