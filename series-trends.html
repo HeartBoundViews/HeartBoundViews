@@ -17,19 +17,14 @@
     <p class="text-gray-400">Select an episode to view generators</p>
   </div>
 
-  <div id="episode-list" class="max-w-4xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-10">
-    <button type="button" onclick="showGenerators('1')" class="card bg-zinc-900 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]">
-      <p class="text-red-500 text-sm mb-1">EP</p>
-      <p class="text-2xl font-bold">1</p>
-    </button>
-  </div>
+   <div id="episode-list" class="max-w-4xl mx-auto px-4 flex flex-wrap gap-2 mb-10"></div>
 
   <div id="generators-section" class="hidden max-w-4xl mx-auto px-4 pb-10">
     <div class="flex items-center justify-between mb-6 gap-3">
       <h2 class="text-2xl font-bold">Episode <span id="current-ep">1</span> – Generators</h2>
       <button type="button" onclick="backToEpisodes()" class="text-sm text-red-500 hover:text-red-400">← Back to Episodes</button>
     </div>
-    <div id="generators-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+    <div id="generators-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3"></div>
   </div>
 
   <section class="max-w-4xl mx-auto px-4 pb-20">
@@ -69,51 +64,57 @@
     </div>
   </section>
 
-  <script src="common.js"></script>
+   <script src="common.js"></script>
   <script>
     let data = {};
+    const TOTAL_EPS = 10;
+    const TOTAL_GENS = 10;
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (json) { data = json || {}; renderEpisodes(); })
-      .catch(function () { data = { episodes: { "1": [] } }; renderEpisodes(); });
+      .catch(function () { data = { episodes: {} }; renderEpisodes(); });
 
     function renderEpisodes() {
       var container = document.getElementById("episode-list");
-      var eps = Object.keys((data && data.episodes) || {});
-      if (!eps.length) eps = ["1"];
-      eps.sort(function (a, b) { return a - b; });
       container.innerHTML = "";
-      eps.forEach(function (ep) {
+      for (var i = 1; i <= TOTAL_EPS; i++) {
+        var ep = String(i);
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "card bg-zinc-900 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]";
-        btn.innerHTML = '<p class="text-red-500 text-sm mb-1">EP</p><p class="text-2xl font-bold">' + ep + "</p>";
-        btn.onclick = function () { showGenerators(ep); };
+        btn.className = "px-4 py-2 rounded-full text-sm font-medium border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-red-500 hover:text-white transition";
+        btn.textContent = "EP " + ep;
+        btn.onclick = (function (n) {
+          return function () { showGenerators(n); };
+        })(ep);
         container.appendChild(btn);
-      });
+      }
     }
 
     function showGenerators(epNumber) {
       document.getElementById("episode-list").classList.add("hidden");
       document.getElementById("generators-section").classList.remove("hidden");
       document.getElementById("current-ep").innerText = epNumber;
+
       var container = document.getElementById("generators-list");
       container.innerHTML = "";
       var list = (data.episodes && data.episodes[epNumber]) || [];
-      if (!list.length) {
-        container.innerHTML = '<p class="text-gray-400">No generators yet.</p>';
-        return;
-      }
-      list.forEach(function (gen) {
+
+      for (var i = 1; i <= TOTAL_GENS; i++) {
+        var gen = list[i - 1] || {};
+        var name = gen.name || ("Generator " + i);
+        var url = gen.url || "#";
+
         var a = document.createElement("a");
-        a.href = gen.url;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.className = "card bg-zinc-900 border border-zinc-700 rounded-xl p-5 hover:border-red-500 block";
-        a.innerHTML = '<p class="text-red-500 text-sm mb-1">' + gen.name + '</p><p class="font-medium">' + gen.title + '</p><p class="text-xs text-gray-500 mt-2">Click to open →</p>';
+        a.href = url;
+        if (url && url !== "#") {
+          a.target = "_blank";
+          a.rel = "noopener";
+        }
+        a.className = "card aspect-square flex items-center justify-center bg-zinc-900 border border-zinc-700 rounded-xl hover:border-red-500 transition text-center p-3";
+        a.innerHTML = '<p class="font-semibold text-sm sm:text-base text-white">' + name + "</p>";
         container.appendChild(a);
-      });
+      }
     }
 
     function backToEpisodes() {
