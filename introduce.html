@@ -9,33 +9,35 @@
     body { background: #070707; min-height: 100vh; }
     .card { transition: all 0.25s ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
+
+    /* LIST BÊN NGOÀI: giữ khung, ảnh to, cách đều 4 phía */
     .photo-frame {
       background: #111;
-      border: 1px solid #3f3f46;
       padding: 12px;
     }
     .photo-frame img {
       width: 100%;
       aspect-ratio: 1 / 1;
-      object-fit: contain;
-      object-position: center;
-      background: #000;
+      object-fit: cover;
+      object-position: center top;
       display: block;
+      border-radius: 0.75rem;
+      background: #000;
     }
+
+    /* TRANG DETAIL: nguyên ảnh, không ô vuông */
     .photo-frame-lg {
-      background: #111;
-      border: 1px solid #3f3f46;
-      padding: 12px;
-      max-width: 280px;
-      margin: 0 auto 8px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      background: transparent;
+      border: none;
     }
     .photo-frame-lg img {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      object-position: center;
-      background: #000;
+      height: auto;
       display: block;
+      border-radius: 1rem;
     }
   </style>
 </head>
@@ -106,7 +108,7 @@
     function photoSrc(src) {
       if (!src) return "";
       if (src.indexOf("http") === 0 || src.indexOf("images/") === 0) return src;
-      return "images/" + src;
+      return src;
     }
 
     function socialLinks(p) {
