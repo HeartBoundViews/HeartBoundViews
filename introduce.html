@@ -9,6 +9,20 @@
     body { background: #070707; min-height: 100vh; }
     .card { transition: all 0.25s ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
+    .profile-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      object-position: center;
+      background: #18181b;
+    }
+    .profile-photo-sm {
+      width: 6rem;
+      height: 6rem;
+      object-fit: contain;
+      object-position: center;
+      background: #18181b;
+    }
   </style>
 </head>
 <body class="text-white">
@@ -41,7 +55,10 @@
   <div id="intro-detail" class="hidden max-w-md mx-auto px-4 pb-20">
     <div class="flex items-center justify-between mb-4">
       <h2 id="detail-name" class="text-xl font-bold">Profile</h2>
-      <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
+      <div class="flex items-center gap-4">
+        <button type="button" onclick="prevProfile()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
+        <button type="button" id="next-btn" onclick="nextProfile()" class="text-sm text-red-500 hover:text-red-400">Next →</button>
+      </div>
     </div>
     <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"></div>
   </div>
@@ -57,6 +74,7 @@
   <script src="common.js"></script>
   <script>
     let introData = { profiles: [], schedule: [], infJobUrl: "#" };
+    let currentIndex = 0;
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
@@ -100,7 +118,7 @@
         el.className = "card bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden text-left";
         el.onclick = function () { showProfile(i); };
         el.innerHTML =
-          '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '" class="w-full h-56 object-cover bg-zinc-800">' +
+          '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '" class="profile-photo">' +
           '<div class="p-4">' +
             '<h3 class="text-lg font-bold">' + (p.name || "") + "</h3>" +
             '<p class="text-sm text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
@@ -110,13 +128,16 @@
     }
 
     function showProfile(i) {
-      const p = (introData.profiles || [])[i];
-      if (!p) return;
+      const list = introData.profiles || [];
+      if (!list[i]) return;
+      currentIndex = i;
+      const p = list[i];
       hideAll();
       document.getElementById("intro-detail").classList.remove("hidden");
       document.getElementById("detail-name").innerText = p.name || "Profile";
+      document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
       document.getElementById("detail-box").innerHTML =
-        '<img src="' + (p.photo || "") + '" alt="" class="w-20 h-20 rounded-xl object-cover bg-zinc-800 mb-4">' +
+        '<img src="' + (p.photo || "") + '" alt="" class="profile-photo-sm rounded-xl mb-4">' +
         '<p class="text-xs text-gray-500 mb-1">Full name</p>' +
         '<p class="font-medium mb-3">' + (p.fullname || p.name || "—") + "</p>" +
         '<p class="text-xs text-gray-500 mb-1">Thai name</p>' +
@@ -129,6 +150,17 @@
         '<p class="font-medium mb-4">' + (p.agency || "—") + "</p>" +
         '<p class="text-xs text-gray-500 mb-2">Socials</p>' +
         '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
+    }
+
+    function prevProfile() {
+      if (currentIndex > 0) showProfile(currentIndex - 1);
+      else backToHome();
+    }
+
+    function nextProfile() {
+      if (currentIndex < (introData.profiles || []).length - 1) {
+        showProfile(currentIndex + 1);
+      }
     }
 
     function showSchedule() {
