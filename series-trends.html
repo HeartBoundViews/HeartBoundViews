@@ -91,13 +91,14 @@
       }
     }
 
-    function showGenerators(epNumber) {
+        function showGenerators(epNumber) {
       document.getElementById("episode-list").classList.add("hidden");
       document.getElementById("generators-section").classList.remove("hidden");
       document.getElementById("current-ep").innerText = epNumber;
 
       var container = document.getElementById("generators-list");
       container.innerHTML = "";
+      container.className = "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2";
       var list = (data.episodes && data.episodes[epNumber]) || [];
 
       for (var i = 1; i <= TOTAL_GENS; i++) {
@@ -111,8 +112,8 @@
           a.target = "_blank";
           a.rel = "noopener";
         }
-        a.className = "card aspect-square flex items-center justify-center bg-zinc-900 border border-zinc-700 rounded-xl hover:border-red-500 transition text-center p-3";
-        a.innerHTML = '<p class="font-semibold text-sm sm:text-base text-white">' + name + "</p>";
+        a.className = "card aspect-square flex items-center justify-center bg-zinc-900 border border-zinc-700 rounded-lg hover:border-red-500 transition text-center p-2";
+        a.innerHTML = '<p class="font-medium text-xs sm:text-sm text-white">' + name + "</p>";
         container.appendChild(a);
       }
     }
