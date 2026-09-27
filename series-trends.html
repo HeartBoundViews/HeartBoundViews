@@ -56,23 +56,31 @@
       background: linear-gradient(145deg, #7f1d1d 0%, #1c0909 55%, #0a0a0a 100%);
       box-shadow: 0 0 0 1px #ef4444, 0 0 18px rgba(239, 68, 68, 0.4);
     }
-    /* Generator cards */
+       /* Generator cards — cùng size EP */
     .gen-card {
-      aspect-ratio: 1;
+      width: 3.25rem; height: 3.25rem;
       display: flex; align-items: center; justify-content: center;
-      background: #18181b;
+      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
       border: 1px solid #3f3f46;
       border-radius: 0.75rem;
       text-align: center;
-      padding: 0.5rem;
+      padding: 0.25rem;
       transition: all 0.25s ease;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #d4d4d8;
+      line-height: 1.15;
+    }
+    @media (min-width: 640px) {
+      .gen-card { width: 3.75rem; height: 3.75rem; font-size: 0.75rem; }
     }
     .gen-card:hover {
       border-color: #ef4444;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(185, 28, 28, 0.2);
+      color: #fff;
+      background: linear-gradient(145deg, #450a0a 0%, #1c0909 50%, #0c0c0c 100%);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
+      transform: translateY(-2px);
     }
-
     /* Guide platform cards */
     .guide-card {
       background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
@@ -158,9 +166,9 @@
 
   <!-- Guide Trending -->
   <section class="relative z-10 max-w-4xl mx-auto px-4 pb-24 fade-up fade-up-d3">
-    <div class="flex items-center gap-2.5 mb-1">
+        <div class="flex items-center gap-2.5 mb-1">
       <span class="w-1 h-5 bg-red-500 rounded-full"></span>
-      <h2 class="text-xl font-bold text-red-500">Guide Trending</h2>
+      <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Guide Trending</h2>
     </div>
     <p class="text-gray-400 text-sm mb-5 ml-3.5">How to trend Heartbound on each platform.</p>
 
@@ -236,18 +244,25 @@
       });
     }
 
-    function showGenerators(epNumber) {
+        function showGenerators(epNumber) {
+      // Bấm lại cùng EP → tắt
+      if (activeEp === String(epNumber)) {
+        backToEpisodes();
+        return;
+      }
+
       setActiveEp(epNumber);
       document.getElementById("generators-section").classList.remove("hidden");
       document.getElementById("current-ep").innerText = epNumber;
 
       var container = document.getElementById("generators-list");
       container.innerHTML = "";
+      container.className = "flex flex-wrap gap-2 sm:gap-2.5";
       var list = (data.episodes && data.episodes[epNumber]) || [];
 
       for (var i = 1; i <= TOTAL_GENS; i++) {
         var gen = list[i - 1] || {};
-        var name = gen.name || ("Generator " + i);
+        var name = gen.name || ("Gen " + i);
         var url = gen.url || "#";
 
         var a = document.createElement("a");
@@ -257,18 +272,17 @@
           a.rel = "noopener";
         }
         a.className = "gen-card";
-        a.innerHTML = '<p class="font-medium text-xs sm:text-sm text-white">' + name + "</p>";
+        a.innerHTML = '<span>' + name + "</span>";
         container.appendChild(a);
       }
-
-      // smooth scroll to generators
-      document.getElementById("generators-section").scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function backToEpisodes() {
       document.getElementById("generators-section").classList.add("hidden");
       activeEp = null;
-      document.querySelectorAll(".ep-btn").forEach(function (b) { b.classList.remove("active"); });
+      document.querySelectorAll(".ep-btn").forEach(function (b) {
+        b.classList.remove("active");
+      });
     }
   </script>
 </body>
