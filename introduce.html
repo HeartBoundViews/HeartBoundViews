@@ -223,9 +223,11 @@
         const items = (m.items || []).map(function (it) {
           var hash = it.hashtag || it.hastag || "";
           var keyw = it.keyword || "";
+          var loc = it.location || "";
           var extra = "";
-          if (hash) extra += '<p class="text-base text-red-400 mt-2 break-all">' + tagText(hash) + "</p>";
-          if (keyw) extra += '<p class="text-base text-gray-300 mt-1 break-all">' + keyw + "</p>";
+          if (loc) extra += '<p class="text-base text-gray-400 mt-1 break-all">📍 ' + loc + "</p>";
+          if (keyw) extra += '<p class="text-base text-gray-300 mt-2 break-all">🔑 ' + keyw + "</p>";
+          if (hash) extra += '<p class="text-base text-red-400 mt-1 break-all">' + tagText(hash) + "</p>";
           return '<div class="py-4 border-b border-zinc-800 last:border-0">' +
             '<div class="flex gap-4">' +
               '<p class="w-28 text-red-400 text-base shrink-0">' + (it.date || "") + "</p>" +
