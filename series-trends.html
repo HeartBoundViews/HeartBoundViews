@@ -82,11 +82,15 @@
       transform: translateY(-2px);
     }
     /* Guide platform cards */
-    .guide-card {
+        .guide-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
       border: 1px solid #3f1a1a;
       border-radius: 1rem;
-      padding: 1.25rem 0.75rem;
+      padding: 1.25rem 0.75rem 1.35rem;
       text-align: center;
       transition: all 0.3s ease;
       position: relative;
@@ -98,13 +102,21 @@
       height: 2px;
       background: linear-gradient(90deg, transparent, #ef4444, transparent);
       opacity: 0.7;
-      transition: opacity 0.3s;
     }
     .guide-card:hover {
       border-color: #991b1b;
       transform: translateY(-4px);
       box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
       background: linear-gradient(165deg, #450a0a 0%, #1a0a0a 45%, #0a0a0a 100%);
+    }
+    .icon-box {
+      width: 2.75rem; height: 2.75rem;
+      margin: 0 auto 0.65rem;
+      border-radius: 0.75rem;
+      background: #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid #27272a;
+      flex-shrink: 0;
     }
     .guide-card:hover::after { opacity: 1; }
     /* soft red glow corners */
@@ -172,7 +184,7 @@
     </div>
     <p class="text-gray-400 text-sm mb-5 ml-3.5">How to trend Heartbound on each platform.</p>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
       <a href="guide-x.html" class="guide-card block">
         <div class="icon-box">
           <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" class="w-6 h-6">
@@ -286,4 +298,17 @@
     }
   </script>
 </body>
+  <body class="text-white relative overflow-x-hidden">
+
+  <!-- Background image mờ -->
+  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <img src="images/hero-perthsanta.jpg" alt=""
+         class="w-full h-full object-cover opacity-20"
+         style="filter: blur(28px) brightness(0.45) saturate(0.8); transform: scale(1.1);">
+    <div class="absolute inset-0 bg-[#070707]/70"></div>
+  </div>
+
+  <!-- soft background glows (giữ nguyên) -->
+  <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
+  ...
 </html>
