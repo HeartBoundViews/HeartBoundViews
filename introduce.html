@@ -27,53 +27,71 @@
       <h2 class="text-xl font-bold mb-4">Job Information</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button type="button" onclick="showSchedule()"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 text-left">
-          <p class="text-red-500 text-xs uppercase mb-2">Job</p>
-          <h3 class="text-lg font-bold">Schedule Job Tháng</h3>
-          <p class="text-sm text-gray-400 mt-1">Lịch làm việc theo tháng</p>
+          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-left">
+          <h3 class="text-lg font-bold">Schedule</h3>
+          <p class="text-sm text-gray-400 mt-1">Monthly schedule</p>
         </button>
 
-        <a id="inf-job-link" href="#" target="_blank" rel="noopener"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 block">
-          <p class="text-red-500 text-xs uppercase mb-2">Job</p>
-          <h3 class="text-lg font-bold">Inf Job</h3>
-          <p class="text-sm text-gray-400 mt-1">Mở trang thông tin job →</p>
-        </a>
+        <button type="button" onclick="showInf()"
+          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-left">
+          <h3 class="text-lg font-bold">Inf</h3>
+          <p class="text-sm text-gray-400 mt-1">Name, birthday and socials</p>
+        </button>
       </div>
     </section>
   </div>
 
-  <div id="intro-detail" class="hidden max-w-5xl mx-auto px-4 pb-20">
-    <div class="flex items-center justify-between mb-6">
-      <h2 id="detail-name" class="text-2xl font-bold">Profile</h2>
+  <div id="intro-detail" class="hidden max-w-md mx-auto px-4 pb-20">
+    <div class="flex items-center justify-between mb-4">
+      <h2 id="detail-name" class="text-xl font-bold">Profile</h2>
       <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
     </div>
-    <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden"></div>
+    <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"></div>
   </div>
 
   <div id="intro-schedule" class="hidden max-w-5xl mx-auto px-4 pb-20">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold">Schedule Job Tháng</h2>
+      <h2 class="text-2xl font-bold">Schedule</h2>
       <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
     </div>
     <div id="schedule-box"></div>
   </div>
 
+  <div id="intro-inf" class="hidden max-w-md mx-auto px-4 pb-20">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold">Inf</h2>
+      <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
+    </div>
+    <div id="inf-box" class="space-y-3"></div>
+  </div>
+
   <script src="common.js"></script>
   <script>
-    let introData = { profiles: [], schedule: [], infJobUrl: "#" };
+    let introData = { profiles: [], schedule: [] };
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (json) {
         introData = json.introduce || introData;
         renderProfiles();
-        document.getElementById("inf-job-link").href = introData.infJobUrl || "#";
       })
       .catch(function () {
         document.getElementById("profile-list").innerHTML =
           "<p class='text-red-500'>Error loading data.json</p>";
       });
+
+    function socialLinks(p) {
+      return (p.socials || []).filter(function (s) { return s.url; }).map(function (s) {
+        return '<a href="' + s.url + '" target="_blank" rel="noopener" class="inline-block bg-red-700 hover:bg-red-600 text-white text-xs rounded-full px-3 py-1.5">' + s.name + "</a>";
+      }).join("") || '<span class="text-xs text-gray-500">No links yet</span>';
+    }
+
+    function hideAll() {
+      document.getElementById("intro-home").classList.add("hidden");
+      document.getElementById("intro-detail").classList.add("hidden");
+      document.getElementById("intro-schedule").classList.add("hidden");
+      document.getElementById("intro-inf").classList.add("hidden");
+    }
 
     function renderProfiles() {
       const box = document.getElementById("profile-list");
@@ -86,7 +104,6 @@
         el.innerHTML =
           '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '" class="w-full h-56 object-cover bg-zinc-800">' +
           '<div class="p-4">' +
-            '<p class="text-red-500 text-xs uppercase mb-1">' + (p.role || "") + "</p>" +
             '<h3 class="text-lg font-bold">' + (p.name || "") + "</h3>" +
             '<p class="text-sm text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
           "</div>";
@@ -97,33 +114,22 @@
     function showProfile(i) {
       const p = (introData.profiles || [])[i];
       if (!p) return;
-      document.getElementById("intro-home").classList.add("hidden");
-      document.getElementById("intro-schedule").classList.add("hidden");
+      hideAll();
       document.getElementById("intro-detail").classList.remove("hidden");
       document.getElementById("detail-name").innerText = p.name || "Profile";
-
-      const socials = (p.socials || []).filter(function (s) { return s.url; }).map(function (s) {
-        return '<a href="' + s.url + '" target="_blank" rel="noopener" class="inline-block bg-red-700 hover:bg-red-600 text-white text-sm rounded-full px-4 py-2.5">' + s.name + " →</a>";
-      }).join("") || "";
-
       document.getElementById("detail-box").innerHTML =
-        '<img src="' + (p.photo || "") + '" alt="" class="w-full h-72 sm:h-80 object-cover bg-zinc-800">' +
-        '<div class="p-5 sm:p-8">' +
-          '<p class="text-red-500 text-sm mb-1">' + (p.role || "") + "</p>" +
-          "<h3 class=\"text-2xl font-bold\">" + (p.fullname || p.name || "") + "</h3>" +
-          '<p class="text-gray-400 mb-6">' + (p.thaiName || "") + "</p>" +
-          '<p class="text-sm text-gray-300 mb-2"><span class="text-gray-500">Born:</span> ' + (p.born || "—") + "</p>" +
-          '<p class="text-sm text-gray-300 mb-6"><span class="text-gray-500">Agency:</span> ' + (p.agency || "—") + "</p>" +
-          '<p class="text-gray-300 leading-relaxed mb-6">' + (p.about || "") + "</p>" +
-          '<div class="flex flex-wrap gap-2">' + socials + "</div>" +
-        "</div>";
+        '<img src="' + (p.photo || "") + '" alt="" class="w-20 h-20 rounded-xl object-cover bg-zinc-800 mb-4">' +
+        '<p class="text-xs text-gray-500 mb-1">Full name</p>' +
+        '<p class="font-medium mb-3">' + (p.fullname || p.name || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Birthday</p>' +
+        '<p class="font-medium mb-4">' + (p.born || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-2">Socials</p>' +
+        '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
     }
 
     function showSchedule() {
-      document.getElementById("intro-home").classList.add("hidden");
-      document.getElementById("intro-detail").classList.add("hidden");
+      hideAll();
       document.getElementById("intro-schedule").classList.remove("hidden");
-
       const box = document.getElementById("schedule-box");
       box.innerHTML = "";
       (introData.schedule || []).forEach(function (m) {
@@ -140,9 +146,27 @@
       });
     }
 
+    function showInf() {
+      hideAll();
+      document.getElementById("intro-inf").classList.remove("hidden");
+      const box = document.getElementById("inf-box");
+      box.innerHTML = "";
+      (introData.profiles || []).forEach(function (p) {
+        const el = document.createElement("div");
+        el.className = "bg-zinc-900 border border-zinc-700 rounded-2xl p-4";
+        el.innerHTML =
+          '<p class="font-semibold mb-2">' + (p.name || "") + "</p>" +
+          '<p class="text-xs text-gray-500">Full name</p>' +
+          '<p class="text-sm mb-2">' + (p.fullname || "—") + "</p>" +
+          '<p class="text-xs text-gray-500">Birthday</p>' +
+          '<p class="text-sm mb-3">' + (p.born || "—") + "</p>" +
+          '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
+        box.appendChild(el);
+      });
+    }
+
     function backToHome() {
-      document.getElementById("intro-detail").classList.add("hidden");
-      document.getElementById("intro-schedule").classList.add("hidden");
+      hideAll();
       document.getElementById("intro-home").classList.remove("hidden");
     }
   </script>
