@@ -6,37 +6,38 @@
   <title>PerthSanta Engagement Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: #070707; min-height: 100vh; }
-    .hero-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: contain;
-    }
-    .hero-title {
-      text-shadow: 0 2px 10px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9);
-    }
-    .menu-row { transition: background 0.2s ease, border-color 0.2s ease; }
-    .menu-row:active { background: rgba(39, 39, 42, 0.9); }
-    @media (min-width: 640px) {
-      .menu-row:hover { border-color: rgba(185, 28, 28, 0.5); background: rgba(24, 24, 27, 0.95); }
-    }
+   body { background: #070707; min-height: 100vh; }
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+.hero-title {
+  text-shadow: 0 2px 10px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.9);
+}
+.menu-row { transition: background 0.2s ease, border-color 0.2s ease; }
+.menu-row:active { background: rgba(39, 39, 42, 0.9); }
+@media (min-width: 640px) {
+  .menu-row:hover { border-color: rgba(185, 28, 28, 0.5); background: rgba(24, 24, 27, 0.95); }
+}
   </style>
 </head>
 <body class="text-white">
 
   <main class="max-w-6xl mx-auto px-4 pt-4 sm:pt-6 pb-8">
 
-    <!-- HERO -->
-    <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-5 sm:mb-8">
-      <img src="images/hero-perthsanta.jpg" alt="PerthSanta" class="hero-img">
+        <!-- HERO -->
+    <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-4 sm:mb-5 h-[130px] sm:h-[160px] md:h-[180px]">
+      <img src="images/hero-perthsanta.jpg" alt="PerthSanta" class="hero-img absolute inset-0">
 
-      <div class="absolute inset-0 flex flex-col items-center justify-end text-center px-4 pb-4 sm:pb-6">
-        <div class="px-4 py-2 sm:px-6 sm:py-3 rounded-2xl bg-black/35">
-          <h1 data-i18n="title" class="hero-title text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+      <div class="absolute inset-0 flex flex-col items-center justify-end text-center px-4 pb-3 sm:pb-4">
+        <div class="px-3 py-1.5 sm:px-5 sm:py-2 rounded-2xl bg-black/40">
+          <h1 data-i18n="title" class="hero-title text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white">
             PerthSanta × Domiia
           </h1>
-          <p data-i18n="subtitle" class="hero-title mt-1.5 sm:mt-2 text-sm sm:text-lg text-white font-medium">
+          <p data-i18n="subtitle" class="hero-title mt-0.5 sm:mt-1 text-xs sm:text-base text-white font-medium">
             Together Forever <span class="text-red-400">♥</span>
           </p>
         </div>
