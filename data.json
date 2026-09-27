@@ -343,52 +343,51 @@
     }
   ],
   "introduce": {
-    "profiles": [
+      "profiles": [
       {
-        "id": "perth",
-        "name": "Perth",
+        "id": "PERTH",
+        "name": "PERTH",
         "fullname": "Tanapon Sukumpantanasan",
         "thaiName": "ธนพนธ์ สุขุมพันธนาสาร",
-        "role": "Actor • Singer",
+        "role": "Actor • Singer • Rocker",
         "photo": "images/Perth.jpg",
         "born": "20 March 2001",
         "agency": "GMMTV",
-        "about": "Thai actor and singer. Known as Ae in Love by Chance, Yotha in Perfect 10 Liners, and Gun De Castro in Heartbound.",
         "socials": [
-          {
-            "name": "Instagram",
-            "url": "https://www.instagram.com/perthppe/"
-          }
+          { "name": "X", "url": "https://x.com/perthppe" },
+          { "name": "IG", "url": "https://www.instagram.com/perthppe/" },
+          { "name": "TikTok", "url": "https://www.tiktok.com/@perth.ppe" }
         ]
       },
       {
-        "id": "santa",
-        "name": "Santa",
+        "id": "SANTA",
+        "name": "SANTA",
         "fullname": "Pongsapak Udompoch",
         "thaiName": "พงศภัค อุดมโภชน์",
         "role": "Actor • Singer • Dancer",
         "photo": "images/Santa.jpg",
         "born": "3 November 2003",
         "agency": "GMMTV",
-        "about": "Thai actor and singer. Known as Gun in Perfect 10 Liners and Ai Aiyara in Heartbound. Member of JASP.ER.",
         "socials": [
-          {
-            "name": "Instagram",
-            "url": "https://www.instagram.com/santa.pp/"
-          }
+          { "name": "X", "url": "https://x.com/Ppsanta" },
+          { "name": "IG", "url": "https://www.instagram.com/santa.pp/" },
+          { "name": "TikTok", "url": "https://www.tiktok.com/@santa.pp" }
         ]
       },
       {
-        "id": "domiia",
-        "name": "Domiia",
-        "fullname": "Official mascot of PerthSanta",
+        "id": "DOMIIA",
+        "name": "DOMIIA",
+        "fullname": "Domiia Sukumpantanasan Udompoch",
         "thaiName": "โดเมีย",
         "role": "Mascot",
         "photo": "images/logo.png",
         "born": "12 January 2025",
-        "agency": "PerthSanta",
-        "about": "Official mascot of the PerthSanta pairing.",
-        "socials": []
+        "son of": "PerthSanta",
+        "socials": [
+          { "name": "X", "url": "https://x.com/domiia_GMMTV" },
+          { "name": "IG", "url": "https://www.instagram.com/domiia.gmmtv/" },
+          { "name": "TikTok", "url": "https://www.tiktok.com/@domiia.gmmtv" }
+        ]
       }
     ],
     "schedule": [
