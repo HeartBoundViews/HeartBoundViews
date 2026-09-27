@@ -4,15 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Introduce - PerthSanta Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background: #070707; min-height: 100vh; }
-    .card { transition: all 0.25s ease; }
-    .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
+    html, body { background: #070707; min-height: 100vh; }
+    body { font-family: Inter, system-ui, sans-serif; color: #fff; }
 
+    .title-serif { font-family: "Cormorant Garamond", Georgia, serif; }
+    .script-font {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    .fade-up-d1 { animation-delay: 0.08s; }
+    .fade-up-d2 { animation-delay: 0.16s; }
+    .fade-up-d3 { animation-delay: 0.24s; }
+
+    .page-glow {
+      pointer-events: none;
+      position: fixed;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.12;
+      z-index: 0;
+    }
+
+    /* Profile cards */
+    .profile-card {
+      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
+      border: 1px solid #3f1a1a;
+      border-radius: 1rem;
+      overflow: hidden;
+      text-align: left;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    .profile-card:hover {
+      border-color: #991b1b;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
+    }
     .photo-frame {
-      background: #111;
-      padding: 12px;
+      background: #0a0a0a;
+      padding: 10px;
     }
     .photo-frame img {
       width: 100%;
@@ -20,77 +64,157 @@
       object-fit: cover;
       object-position: center top;
       display: block;
-      border-radius: 0.75rem;
+      border-radius: 0.65rem;
       background: #000;
-    }
-
-    .photo-frame-lg {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 0;
-      background: transparent;
-      border: none;
     }
     .photo-frame-lg img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 1rem;
+      border: 1px solid #3f1a1a;
     }
+
+    /* Job / action cards */
+    .action-card {
+      display: block;
+      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
+      border: 1px solid #3f1a1a;
+      border-radius: 1rem;
+      padding: 1.5rem 1.25rem;
+      text-align: left;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+    .action-card::after {
+      content: "";
+      position: absolute; left: 20%; right: 20%; bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ef4444, transparent);
+      opacity: 0.7;
+    }
+    .action-card:hover {
+      border-color: #991b1b;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
+      background: linear-gradient(165deg, #450a0a 0%, #1a0a0a 45%, #0a0a0a 100%);
+    }
+    .action-card:hover::after { opacity: 1; }
+
+    /* Detail / schedule panels */
+    .panel-box {
+      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
+      border: 1px solid #3f1a1a;
+      border-radius: 1rem;
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+
+    .back-link {
+      color: #f87171;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #fca5a5; }
   </style>
 </head>
-<body class="text-white">
-  <div class="max-w-5xl mx-auto px-4 pt-8 pb-6">
-    <h1 class="text-4xl md:text-5xl font-bold mb-2">Introduce</h1>
+<body class="text-white relative overflow-x-hidden">
+
+  <!-- Background image mờ -->
+  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <img src="images/poster-heartbound.jpg" alt=""
+         class="w-full h-full object-cover opacity-95"
+         style="filter: blur(16px) brightness(0.7) saturate(0.9); transform: scale(1.08);">
+    <div class="absolute inset-0 bg-[#070707]/20"></div>
   </div>
 
-  <div id="intro-home">
-    <section class="max-w-5xl mx-auto px-4 mb-10">
-      <h2 class="text-2xl font-bold mb-4">Profile</h2>
+  <!-- soft background glows -->
+  <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
+  <div class="page-glow bg-red-800" style="bottom:10%;left:-80px;"></div>
+
+  <!-- Header -->
+  <div class="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-6">
+    <div class="flex items-start justify-between gap-4">
+      <div class="fade-up">
+        <h1 class="title-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-none tracking-tight">
+          <span class="text-white">Intro</span><span class="text-red-500">duce</span>
+        </h1>
+        <p class="text-gray-400 text-sm mt-3">Profiles · Schedule · Info</p>
+      </div>
+      <div class="hidden sm:block text-right fade-up fade-up-d1 pt-2">
+        <p class="script-font text-base md:text-lg text-white/70 tracking-wide font-light whitespace-nowrap">
+          Together We Make It Happen
+        </p>
+        <div class="ml-auto mt-1.5 w-20 h-px bg-red-500/60 rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="intro-home" class="relative z-10">
+    <section class="max-w-4xl mx-auto px-4 mb-10 fade-up fade-up-d1">
+      <div class="flex items-center gap-2.5 mb-1">
+        <span class="w-1 h-5 bg-red-500 rounded-full"></span>
+        <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Profile</h2>
+      </div>
+      <p class="text-gray-400 text-sm mb-5 ml-3.5">Tap a card to view full profile.</p>
       <div id="profile-list" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
     </section>
 
-    <section class="max-w-5xl mx-auto px-4 pb-20">
-      <h2 class="text-2xl font-bold mb-4">Job Information</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <button type="button" onclick="showSchedule()"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 text-left">
-          <h3 class="text-xl font-bold">Schedule</h3>
-        </button>
+    <div class="max-w-4xl mx-auto px-4 mb-8">
+      <div class="h-px bg-gradient-to-r from-transparent via-red-800/50 to-transparent"></div>
+    </div>
 
-        <a id="inf-job-link" href="#" target="_blank" rel="noopener"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 block">
-          <h3 class="text-xl font-bold">Summary</h3>
+    <section class="max-w-4xl mx-auto px-4 pb-24 fade-up fade-up-d2">
+      <div class="flex items-center gap-2.5 mb-1">
+        <span class="w-1 h-5 bg-red-500 rounded-full"></span>
+        <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Job Information</h2>
+      </div>
+      <p class="text-gray-400 text-sm mb-5 ml-3.5">Schedule & summary.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <button type="button" onclick="showSchedule()" class="action-card">
+          <h3 class="text-lg sm:text-xl font-bold text-zinc-100">Schedule</h3>
+          <p class="text-sm text-gray-400 mt-1">Upcoming events →</p>
+        </button>
+        <a id="inf-job-link" href="#" target="_blank" rel="noopener" class="action-card">
+          <h3 class="text-lg sm:text-xl font-bold text-zinc-100">Summary</h3>
+          <p class="text-sm text-gray-400 mt-1">Open full info →</p>
         </a>
       </div>
     </section>
   </div>
 
-  <div id="intro-detail" class="hidden max-w-xl mx-auto px-4 pb-20">
-    <div class="flex items-center justify-between mb-4">
-      <h2 id="detail-name" class="text-2xl md:text-3xl font-bold">Profile</h2>
+  <!-- PROFILE DETAIL -->
+  <div id="intro-detail" class="hidden relative z-10 max-w-xl mx-auto px-4 pb-24">
+    <div class="flex items-center justify-between mb-5">
+      <h2 id="detail-name" class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Profile</h2>
       <div class="flex items-center gap-4">
-        <button type="button" onclick="prevProfile()" class="text-base text-red-500 hover:text-red-400">← Back</button>
-        <button type="button" id="next-btn" onclick="nextProfile()" class="text-base text-red-500 hover:text-red-400">Next →</button>
+        <button type="button" onclick="prevProfile()" class="back-link">← Back</button>
+        <button type="button" id="next-btn" onclick="nextProfile()" class="back-link">Next →</button>
       </div>
     </div>
-    <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 sm:p-7"></div>
+    <div id="detail-box" class="panel-box"></div>
   </div>
 
-  <div id="intro-schedule" class="hidden max-w-5xl mx-auto px-4 pb-20">
+  <!-- SCHEDULE -->
+  <div id="intro-schedule" class="hidden relative z-10 max-w-4xl mx-auto px-4 pb-24">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl md:text-3xl font-bold">Schedule</h2>
-      <button type="button" onclick="backToHome()" class="text-base text-red-500 hover:text-red-400">← Back</button>
+      <div class="flex items-center gap-2.5">
+        <span class="w-1 h-5 bg-red-500 rounded-full"></span>
+        <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Schedule</h2>
+      </div>
+      <button type="button" onclick="backToHome()" class="back-link">← Back</button>
     </div>
     <div id="schedule-box"></div>
   </div>
 
   <script src="common.js"></script>
   <script>
-    let introData = { profiles: [], schedule: [], infJobUrl: "#" };
-    let currentIndex = 0;
+    var introData = { profiles: [], schedule: [], infJobUrl: "#" };
+    var currentIndex = 0;
 
-    const PHOTO_MAP = {
+    var PHOTO_MAP = {
       PERTH: "images/perthrockstar.jpg",
       SANTA: "images/santadancer.jpg",
       DOMIIA: "images/domiia.jpg"
@@ -118,10 +242,10 @@
     }
 
     function socialLinks(p) {
-      const icons = {
+      var icons = {
         X: {
           svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.56l-5.14-6.72L5.2 22H1.94l8.02-9.16L1.5 2h6.73l4.65 6.17L18.244 2zm-1.15 18.12h1.82L7 3.78H5.05l12.04 16.34z"/></svg>',
-          cls: "bg-black hover:bg-zinc-800 text-white"
+          cls: "bg-black hover:bg-zinc-800 text-white border border-zinc-700"
         },
         IG: {
           svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
@@ -132,123 +256,4 @@
           cls: "text-white"
         },
         TikTok: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3c.2 2.6 1.6 4.4 4.2 4.7v2.6c-1.4 0-2.7-.4-4.1-1.3v6.7c0 3.4-2.6 6.1-6.1 6.1S2.4 19.1 2.4 15.6 5 9.5 8.5 9.5c.4 0 .8 0 1.1.1v2.8c-.3-.1-.7-.2-1.1-.2-2 0-3.6 1.6-3.6 3.6s1.6 3.6 3.6 3.6 3.6-1.6 3.6-3.6V3h2.4z"/></svg>',
-          cls: "bg-black hover:bg-zinc-800 text-white"
-        }
-      };
-
-      return (p.socials || []).filter(function (s) { return s.url; }).map(function (s) {
-        var item = icons[s.name] || { svg: s.name, cls: "bg-zinc-700 text-white" };
-        var extra = "";
-        if (s.name === "IG" || s.name === "Instagram") {
-          extra = ' style="background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)"';
-        } else if (s.name === "TikTok") {
-          extra = ' style="box-shadow: 2px 0 0 #25F4EE, -2px 0 0 #FE2C55"';
-        }
-        return '<a href="' + s.url + '" target="_blank" rel="noopener" title="' + s.name + '" class="inline-flex items-center justify-center w-11 h-11 rounded-full ' + item.cls + '"' + extra + ">" + item.svg + "</a>";
-      }).join("") || '<span class="text-sm text-gray-500">No links yet</span>';
-    }
-
-    function hideAll() {
-      document.getElementById("intro-home").classList.add("hidden");
-      document.getElementById("intro-detail").classList.add("hidden");
-      document.getElementById("intro-schedule").classList.add("hidden");
-    }
-
-    function renderProfiles() {
-      const box = document.getElementById("profile-list");
-      box.innerHTML = "";
-      (introData.profiles || []).forEach(function (p, i) {
-        const el = document.createElement("button");
-        el.type = "button";
-        el.className = "card bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden text-left";
-        el.onclick = function () { showProfile(i); };
-        el.innerHTML =
-          '<div class="photo-frame"><img src="' + photoSrc(p) + '" alt="' + (p.name || "") + '"></div>' +
-          '<div class="p-4">' +
-            '<h3 class="text-xl font-bold">' + (p.name || "") + "</h3>" +
-            '<p class="text-base text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
-          "</div>";
-        box.appendChild(el);
-      });
-    }
-
-    function showProfile(i) {
-      const list = introData.profiles || [];
-      if (!list[i]) return;
-      currentIndex = i;
-      const p = list[i];
-      hideAll();
-      document.getElementById("intro-detail").classList.remove("hidden");
-      document.getElementById("detail-name").innerText = p.name || "Profile";
-      document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
-      document.getElementById("detail-box").innerHTML =
-        '<div class="photo-frame-lg"><img src="' + photoSrc(p) + '" alt=""></div>' +
-        '<p class="text-base text-gray-400 mb-1 mt-6">Full name</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.fullname || p.name || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Thai name</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.thaiName || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Role</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.role || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Birthday</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.born || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Agency</p>' +
-        '<p class="text-xl font-semibold mb-5">' + (p.agency || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-2">Socials</p>' +
-        '<div class="flex flex-wrap gap-3">' + socialLinks(p) + "</div>";
-    }
-
-    function prevProfile() {
-      if (currentIndex > 0) showProfile(currentIndex - 1);
-      else backToHome();
-    }
-
-    function nextProfile() {
-      if (currentIndex < (introData.profiles || []).length - 1) {
-        showProfile(currentIndex + 1);
-      }
-    }
-
-    function tagText(v) {
-      if (!v) return "";
-      return String(v).charAt(0) === "#" ? v : "#" + v;
-    }
-
-    function showSchedule() {
-      hideAll();
-      document.getElementById("intro-schedule").classList.remove("hidden");
-      const box = document.getElementById("schedule-box");
-      box.innerHTML = "";
-      (introData.schedule || []).forEach(function (m) {
-        const items = (m.items || []).map(function (it) {
-          var hash = it.hashtag || it.hastag || "";
-          var keyw = it.keyword || "";
-          var loc = it.location || "";
-          var extra = "";
-          if (loc) extra += '<p class="text-base text-gray-400 mt-1 break-all">📍 ' + loc + "</p>";
-          if (keyw) extra += '<p class="text-base text-gray-300 mt-2 break-all">🔑 ' + keyw + "</p>";
-          if (hash) extra += '<p class="text-base text-red-400 mt-1 break-all">' + tagText(hash) + "</p>";
-          return '<div class="py-4 border-b border-zinc-800 last:border-0">' +
-            '<div class="flex gap-4">' +
-              '<p class="w-28 text-red-400 text-base shrink-0">' + (it.date || "") + "</p>" +
-              "<div class=\"min-w-0\">" +
-                '<p class="text-lg font-medium">' + (it.title || "") + "</p>" +
-                '<p class="text-base text-gray-400">' + (it.note || "") + "</p>" +
-                extra +
-              "</div>" +
-            "</div></div>";
-        }).join("");
-        const el = document.createElement("div");
-        el.className = "bg-zinc-900 border border-zinc-700 rounded-2xl p-5 mb-4";
-        el.innerHTML = "<h3 class=\"text-xl font-bold mb-3\">" + (m.month || "") + "</h3>" + items;
-        box.appendChild(el);
-      });
-    }
-
-    function backToHome() {
-      hideAll();
-      document.getElementById("intro-home").classList.remove("hidden");
-    }
-  </script>
-</body>
-</html>
+          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3c.2 2.6 1.6 4.4 4.2 4.7v2.6c-1.4 0-2.7-.4-4.1-1.3v6.7c0 3.4-2.6 6.1-6.1 6.1S2.4 
