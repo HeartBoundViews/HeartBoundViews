@@ -9,112 +9,47 @@
     body { background: #070707; min-height: 100vh; }
     .card { transition: all 0.25s ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
-    .polaroid {
-      background: #f4efe6;
-      padding: 10px 10px 0;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-    }
-    .polaroid img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      object-position: center;
-      background: #ece7de;
-      display: block;
-    }
-    .polaroid .pola-caption {
-      padding: 12px 8px 16px;
-      text-align: center;
-      color: #1a1a1a;
-    }
-    .polaroid .pola-caption strong {
-      display: block;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-    .polaroid .pola-caption span {
-      display: block;
-      margin-top: 2px;
-      font-size: 0.78rem;
-      color: #4b4b4b;
-    }
-    .polaroid-lg {
-      background: #f4efe6;
-      max-width: 280px;
-      margin: 0 auto 8px;
-      padding: 12px 12px 0;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
-      transform: rotate(-1.5deg);
-    }
-    .polaroid-lg img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      object-position: center;
-      background: #ece7de;
-      display: block;
-    }
-    .polaroid-lg .pola-caption {
-      padding: 14px 8px 18px;
-      text-align: center;
-      color: #1a1a1a;
-    }
-    .polaroid-lg .pola-caption strong {
-      display: block;
-      font-size: 1.15rem;
-      font-weight: 700;
-    }
-    .polaroid-lg .pola-caption span {
-      display: block;
-      margin-top: 3px;
-      font-size: 0.82rem;
-      color: #4b4b4b;
-    }
   </style>
 </head>
 <body class="text-white">
   <div class="max-w-5xl mx-auto px-4 pt-8 pb-6">
-    <h1 class="text-4xl md:text-5xl font-bold mb-2">Introduce</h1>
+    <h1 class="text-3xl md:text-4xl font-bold mb-2">Introduce</h1>
   </div>
 
   <div id="intro-home">
     <section class="max-w-5xl mx-auto px-4 mb-10">
-      <h2 class="text-2xl font-bold mb-4">Profile</h2>
+      <h2 class="text-xl font-bold mb-4">Profile</h2>
       <div id="profile-list" class="grid grid-cols-1 sm:grid-cols-3 gap-4"></div>
     </section>
 
     <section class="max-w-5xl mx-auto px-4 pb-20">
-      <h2 class="text-2xl font-bold mb-4">Job Information</h2>
+      <h2 class="text-xl font-bold mb-4">Job Information</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <button type="button" onclick="showSchedule()"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 text-left">
-          <h3 class="text-xl font-bold">Schedule</h3>
+          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-left">
+          <h3 class="text-lg font-bold">Schedule</h3>
         </button>
 
         <a id="inf-job-link" href="#" target="_blank" rel="noopener"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-6 block">
-          <h3 class="text-xl font-bold">Summary</h3>
+          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 block">
+          <h3 class="text-lg font-bold">Summary</h3>
         </a>
       </div>
     </section>
   </div>
 
-  <div id="intro-detail" class="hidden max-w-xl mx-auto px-4 pb-20">
+  <div id="intro-detail" class="hidden max-w-md mx-auto px-4 pb-20">
     <div class="flex items-center justify-between mb-4">
-      <h2 id="detail-name" class="text-2xl md:text-3xl font-bold">Profile</h2>
-      <div class="flex items-center gap-4">
-        <button type="button" onclick="prevProfile()" class="text-base text-red-500 hover:text-red-400">← Back</button>
-        <button type="button" id="next-btn" onclick="nextProfile()" class="text-base text-red-500 hover:text-red-400">Next →</button>
-      </div>
+      <h2 id="detail-name" class="text-xl font-bold">Profile</h2>
+      <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
     </div>
-    <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 sm:p-7"></div>
+    <div id="detail-box" class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"></div>
   </div>
 
   <div id="intro-schedule" class="hidden max-w-5xl mx-auto px-4 pb-20">
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl md:text-3xl font-bold">Schedule</h2>
-      <button type="button" onclick="backToHome()" class="text-base text-red-500 hover:text-red-400">← Back</button>
+      <h2 class="text-2xl font-bold">Schedule</h2>
+      <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
     </div>
     <div id="schedule-box"></div>
   </div>
@@ -122,15 +57,15 @@
   <script src="common.js"></script>
   <script>
     let introData = { profiles: [], schedule: [], infJobUrl: "#" };
-    let currentIndex = 0;
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (json) {
         introData = json.introduce || introData;
         renderProfiles();
-        document.getElementById("inf-job-link").href =
-          introData.infJobUrl || introData["information job"] || "#";
+        // Hỗ trợ cả key "infJobUrl" và "information job" (có khoảng trắng)
+        const jobUrl = introData.infJobUrl || introData["information job"] || "#";
+        document.getElementById("inf-job-link").href = jobUrl;
       })
       .catch(function () {
         document.getElementById("profile-list").innerHTML =
@@ -138,35 +73,9 @@
       });
 
     function socialLinks(p) {
-      const icons = {
-        X: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.56l-5.14-6.72L5.2 22H1.94l8.02-9.16L1.5 2h6.73l4.65 6.17L18.244 2zm-1.15 18.12h1.82L7 3.78H5.05l12.04 16.34z"/></svg>',
-          cls: "bg-black hover:bg-zinc-800 text-white"
-        },
-        IG: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
-          cls: "text-white"
-        },
-        Instagram: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>',
-          cls: "text-white"
-        },
-        TikTok: {
-          svg: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 3c.2 2.6 1.6 4.4 4.2 4.7v2.6c-1.4 0-2.7-.4-4.1-1.3v6.7c0 3.4-2.6 6.1-6.1 6.1S2.4 19.1 2.4 15.6 5 9.5 8.5 9.5c.4 0 .8 0 1.1.1v2.8c-.3-.1-.7-.2-1.1-.2-2 0-3.6 1.6-3.6 3.6s1.6 3.6 3.6 3.6 3.6-1.6 3.6-3.6V3h2.4z"/></svg>',
-          cls: "bg-black hover:bg-zinc-800 text-white"
-        }
-      };
-
       return (p.socials || []).filter(function (s) { return s.url; }).map(function (s) {
-        var item = icons[s.name] || { svg: s.name, cls: "bg-zinc-700 text-white" };
-        var extra = "";
-        if (s.name === "IG" || s.name === "Instagram") {
-          extra = ' style="background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)"';
-        } else if (s.name === "TikTok") {
-          extra = ' style="box-shadow: 2px 0 0 #25F4EE, -2px 0 0 #FE2C55"';
-        }
-        return '<a href="' + s.url + '" target="_blank" rel="noopener" title="' + s.name + '" class="inline-flex items-center justify-center w-11 h-11 rounded-full ' + item.cls + '"' + extra + ">" + item.svg + "</a>";
-      }).join("") || '<span class="text-sm text-gray-500">No links yet</span>';
+        return '<a href="' + s.url + '" target="_blank" rel="noopener" class="inline-block bg-red-700 hover:bg-red-600 text-white text-xs rounded-full px-3 py-1.5">' + s.name + "</a>";
+      }).join("") || '<span class="text-xs text-gray-500">No links yet</span>';
     }
 
     function hideAll() {
@@ -181,56 +90,38 @@
       (introData.profiles || []).forEach(function (p, i) {
         const el = document.createElement("button");
         el.type = "button";
-        el.className = "card bg-transparent border-0 text-left p-1";
+        el.className = "card bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden text-left";
         el.onclick = function () { showProfile(i); };
         el.innerHTML =
-          '<div class="polaroid">' +
-            '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '">' +
-            '<div class="pola-caption"><strong>' + (p.name || "") + "</strong>" +
-            "<span>" + (p.fullname || "") + "</span></div>" +
+          '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '" class="w-full h-56 object-cover bg-zinc-800">' +
+          '<div class="p-4">' +
+            '<h3 class="text-lg font-bold">' + (p.name || "") + "</h3>" +
+            '<p class="text-sm text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
           "</div>";
         box.appendChild(el);
       });
     }
 
     function showProfile(i) {
-      const list = introData.profiles || [];
-      if (!list[i]) return;
-      currentIndex = i;
-      const p = list[i];
+      const p = (introData.profiles || [])[i];
+      if (!p) return;
       hideAll();
       document.getElementById("intro-detail").classList.remove("hidden");
       document.getElementById("detail-name").innerText = p.name || "Profile";
-      document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
       document.getElementById("detail-box").innerHTML =
-        '<div class="polaroid-lg">' +
-          '<img src="' + (p.photo || "") + '" alt="">' +
-          '<div class="pola-caption"><strong>' + (p.name || "") + "</strong>" +
-          "<span>" + (p.fullname || "") + "</span></div>" +
-        "</div>" +
-        '<p class="text-base text-gray-400 mb-1 mt-6">Full name</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.fullname || p.name || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Thai name</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.thaiName || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Role</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.role || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Birthday</p>' +
-        '<p class="text-xl font-semibold mb-4">' + (p.born || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-1">Agency</p>' +
-        '<p class="text-xl font-semibold mb-5">' + (p.agency || "—") + "</p>" +
-        '<p class="text-base text-gray-400 mb-2">Socials</p>' +
-        '<div class="flex flex-wrap gap-3">' + socialLinks(p) + "</div>";
-    }
-
-    function prevProfile() {
-      if (currentIndex > 0) showProfile(currentIndex - 1);
-      else backToHome();
-    }
-
-    function nextProfile() {
-      if (currentIndex < (introData.profiles || []).length - 1) {
-        showProfile(currentIndex + 1);
-      }
+        '<img src="' + (p.photo || "") + '" alt="" class="w-20 h-20 rounded-xl object-cover bg-zinc-800 mb-4">' +
+        '<p class="text-xs text-gray-500 mb-1">Full name</p>' +
+        '<p class="font-medium mb-3">' + (p.fullname || p.name || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Thai name</p>' +
+        '<p class="font-medium mb-3">' + (p.thaiName || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Role</p>' +
+        '<p class="font-medium mb-3">' + (p.role || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Birthday</p>' +
+        '<p class="font-medium mb-3">' + (p.born || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Agency</p>' +
+        '<p class="font-medium mb-4">' + (p.agency || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-2">Socials</p>' +
+        '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
     }
 
     function showSchedule() {
@@ -241,13 +132,13 @@
       (introData.schedule || []).forEach(function (m) {
         const items = (m.items || []).map(function (it) {
           return '<div class="flex gap-4 py-3 border-b border-zinc-800 last:border-0">' +
-            '<p class="w-28 text-red-400 text-base shrink-0">' + (it.date || "") + "</p>" +
-            "<div><p class=\"text-lg font-medium\">" + (it.title || "") + "</p>" +
-            '<p class="text-base text-gray-400">' + (it.note || "") + "</p></div></div>";
+            '<p class="w-24 text-red-400 text-sm shrink-0">' + (it.date || "") + "</p>" +
+            "<div><p class=\"font-medium\">" + (it.title || "") + "</p>" +
+            '<p class="text-sm text-gray-400">' + (it.note || "") + "</p></div></div>";
         }).join("");
         const el = document.createElement("div");
         el.className = "bg-zinc-900 border border-zinc-700 rounded-2xl p-5 mb-4";
-        el.innerHTML = "<h3 class=\"text-xl font-bold mb-3\">" + (m.month || "") + "</h3>" + items;
+        el.innerHTML = "<h3 class=\"text-lg font-bold mb-3\">" + (m.month || "") + "</h3>" + items;
         box.appendChild(el);
       });
     }
