@@ -40,19 +40,28 @@
 
   <main class="max-w-6xl mx-auto px-4 pt-3 sm:pt-4 pb-6">
 
-    <!-- HERO -->
+       <!-- HERO -->
     <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-3 sm:mb-4 h-[200px] sm:h-[300px] md:h-[380px]">
       <img src="images/hero-perthsanta.jpg" alt="PerthSanta" class="hero-img absolute inset-0">
-      <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-black/20"></div>
 
-      <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-        <h1 data-i18n="title" class="hero-title text-3xl sm:text-5xl md:text-6xl font-bold tracking-wide text-white">
+      <!-- Title: kéo lên cao, tránh che mặt -->
+      <div class="absolute inset-x-0 top-0 flex flex-col items-center text-center px-4 pt-4 sm:pt-6 md:pt-8">
+        <h1 data-i18n="title" class="hero-title text-2xl sm:text-4xl md:text-5xl font-bold tracking-wide text-white">
           PerthSanta × Domiia
         </h1>
-        <p data-i18n="subtitle" class="hero-sub mt-2 sm:mt-3 text-[11px] sm:text-sm uppercase text-white/90 font-medium">
+        <p data-i18n="subtitle" class="hero-sub mt-1 sm:mt-2 text-[10px] sm:text-xs md:text-sm uppercase text-white/90 font-medium">
           Together Forever
         </p>
       </div>
+
+      <!-- Credit tác giả ảnh -->
+      <a href="https://x.com/jammyjellyjam?s=20"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="absolute bottom-2 right-3 sm:bottom-3 sm:right-4 text-[10px] sm:text-xs text-white/70 hover:text-white transition">
+        @jammyjellyjam
+      </a>
     </div>
     
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
