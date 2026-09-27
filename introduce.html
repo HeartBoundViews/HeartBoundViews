@@ -29,14 +29,12 @@
         <button type="button" onclick="showSchedule()"
           class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-left">
           <h3 class="text-lg font-bold">Schedule</h3>
-          <p class="text-sm text-gray-400 mt-1">Monthly schedule</p>
         </button>
 
-        <button type="button" onclick="showInf()"
-          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 text-left">
-          <h3 class="text-lg font-bold">Inf</h3>
-          <p class="text-sm text-gray-400 mt-1">Name, birthday and socials</p>
-        </button>
+        <a id="inf-job-link" href="#" target="_blank" rel="noopener"
+          class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 block">
+          <h3 class="text-lg font-bold">Tổng hợp thông tin job</h3>
+        </a>
       </div>
     </section>
   </div>
@@ -57,23 +55,16 @@
     <div id="schedule-box"></div>
   </div>
 
-  <div id="intro-inf" class="hidden max-w-md mx-auto px-4 pb-20">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl font-bold">Inf</h2>
-      <button type="button" onclick="backToHome()" class="text-sm text-red-500 hover:text-red-400">← Back</button>
-    </div>
-    <div id="inf-box" class="space-y-3"></div>
-  </div>
-
   <script src="common.js"></script>
   <script>
-    let introData = { profiles: [], schedule: [] };
+    let introData = { profiles: [], schedule: [], infJobUrl: "#" };
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (json) {
         introData = json.introduce || introData;
         renderProfiles();
+        document.getElementById("inf-job-link").href = introData.infJobUrl || "#";
       })
       .catch(function () {
         document.getElementById("profile-list").innerHTML =
@@ -90,7 +81,6 @@
       document.getElementById("intro-home").classList.add("hidden");
       document.getElementById("intro-detail").classList.add("hidden");
       document.getElementById("intro-schedule").classList.add("hidden");
-      document.getElementById("intro-inf").classList.add("hidden");
     }
 
     function renderProfiles() {
@@ -142,25 +132,6 @@
         const el = document.createElement("div");
         el.className = "bg-zinc-900 border border-zinc-700 rounded-2xl p-5 mb-4";
         el.innerHTML = "<h3 class=\"text-lg font-bold mb-3\">" + (m.month || "") + "</h3>" + items;
-        box.appendChild(el);
-      });
-    }
-
-    function showInf() {
-      hideAll();
-      document.getElementById("intro-inf").classList.remove("hidden");
-      const box = document.getElementById("inf-box");
-      box.innerHTML = "";
-      (introData.profiles || []).forEach(function (p) {
-        const el = document.createElement("div");
-        el.className = "bg-zinc-900 border border-zinc-700 rounded-2xl p-4";
-        el.innerHTML =
-          '<p class="font-semibold mb-2">' + (p.name || "") + "</p>" +
-          '<p class="text-xs text-gray-500">Full name</p>' +
-          '<p class="text-sm mb-2">' + (p.fullname || "—") + "</p>" +
-          '<p class="text-xs text-gray-500">Birthday</p>' +
-          '<p class="text-sm mb-3">' + (p.born || "—") + "</p>" +
-          '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
         box.appendChild(el);
       });
     }
