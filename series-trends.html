@@ -4,222 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Heartbound Series Trends - PerthSanta Hub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html, body { background: #070707; min-height: 100vh; }
-    body { font-family: Inter, system-ui, sans-serif; color: #fff; }
-
-    .title-serif { font-family: "Cormorant Garamond", Georgia, serif; }
-       .script-font {
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-style: italic;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-
-    /* subtle fade-in */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.5s ease both; }
-    .fade-up-d1 { animation-delay: 0.08s; }
-    .fade-up-d2 { animation-delay: 0.16s; }
-    .fade-up-d3 { animation-delay: 0.24s; }
-
-   /* EP buttons */
-    .ep-btn {
-      width: 3.25rem; height: 3.25rem;
-      border-radius: 0.75rem;
-      border: 1px solid #3f3f46;
-      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
-      color: #d4d4d8;
-      font-size: 0.8rem; font-weight: 600;
-      transition: all 0.25s ease;
-      display: flex; align-items: center; justify-content: center;
-    }
-    @media (min-width: 640px) {
-      .ep-btn { width: 3.75rem; height: 3.75rem; font-size: 0.875rem; }
-    }
-    .ep-btn:hover {
-      border-color: #ef4444;
-      color: #fff;
-      background: linear-gradient(145deg, #450a0a 0%, #1c0909 50%, #0c0c0c 100%);
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
-    }
-    .ep-btn.active {
-      border-color: #ef4444;
-      color: #fff;
-      background: linear-gradient(145deg, #7f1d1d 0%, #1c0909 55%, #0a0a0a 100%);
-      box-shadow: 0 0 0 1px #ef4444, 0 0 18px rgba(239, 68, 68, 0.4);
-    }
-       /* Generator cards — cùng size EP */
-    .gen-card {
-      width: 3.25rem; height: 3.25rem;
-      display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
-      border: 1px solid #3f3f46;
-      border-radius: 0.75rem;
-      text-align: center;
-      padding: 0.25rem;
-      transition: all 0.25s ease;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: #d4d4d8;
-      line-height: 1.15;
-    }
-    @media (min-width: 640px) {
-      .gen-card { width: 3.75rem; height: 3.75rem; font-size: 0.75rem; }
-    }
-    .gen-card:hover {
-      border-color: #ef4444;
-      color: #fff;
-      background: linear-gradient(145deg, #450a0a 0%, #1c0909 50%, #0c0c0c 100%);
-      box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
-      transform: translateY(-2px);
-    }
-    /* Guide platform cards */
-        .guide-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(165deg, #2a0a0a 0%, #141414 45%, #0a0a0a 100%);
-      border: 1px solid #3f1a1a;
-      border-radius: 1rem;
-      padding: 1.25rem 0.75rem 1.35rem;
-      text-align: center;
-      transition: all 0.3s ease;
+    body {
+      min-height: 100vh;
+      background: #070707;
       position: relative;
-      overflow: hidden;
     }
-    .guide-card::after {
+    /* Ảnh nền mờ */
+    body::before {
       content: "";
-      position: absolute; left: 20%; right: 20%; bottom: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #ef4444, transparent);
-      opacity: 0.7;
-    }
-    .guide-card:hover {
-      border-color: #991b1b;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(185, 28, 28, 0.22);
-      background: linear-gradient(165deg, #450a0a 0%, #1a0a0a 45%, #0a0a0a 100%);
-    }
-    .icon-box {
-      width: 2.75rem; height: 2.75rem;
-      margin: 0 auto 0.65rem;
-      border-radius: 0.75rem;
-      background: #0a0a0a;
-      display: flex; align-items: center; justify-content: center;
-      border: 1px solid #27272a;
-      flex-shrink: 0;
-    }
-    .guide-card:hover::after { opacity: 1; }
-    /* soft red glow corners */
-    .page-glow {
-      pointer-events: none;
       position: fixed;
-      width: 280px; height: 280px;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.12;
-      z-index: 0;
+      inset: 0;
+      z-index: -1;
+      background: url("images/poster-heartbound.jpg") center center / cover no-repeat;
+      filter: blur(14px) brightness(0.35);
+      transform: scale(1.1); /* tránh mép trắng khi blur */
     }
+    /* Lớp phủ tối nhẹ để chữ dễ đọc */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .card { transition: all 0.25s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.25); }
   </style>
 </head>
-<body class="text-white relative overflow-x-hidden">
-  <!-- Background image mờ -->
-  <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-    <img src="images/hero-perthsanta.jpg" alt=""
-         class="w-full h-full object-cover opacity-25"
-         style="filter: blur(24px) brightness(0.5) saturate(0.85); transform: scale(1.08);">
-    <div class="absolute inset-0 bg-[#070707]/65"></div>
+<body class="text-white">
+  <div class="max-w-4xl mx-auto px-4 pt-8 pb-6">
+    <h1 class="text-3xl md:text-4xl font-bold mb-2">Heartbound Series Trends</h1>
+    <p class="text-gray-400">Select an episode to view generators</p>
   </div>
-  <!-- soft background glows -->
-  <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
-  <div class="page-glow bg-red-800" style="bottom:10%;left:-80px;"></div>
 
-  <div class="relative z-10 max-w-4xl mx-auto px-4 pt-8 pb-6">
-    <div class="flex items-start justify-between gap-4">
-      <div class="fade-up">
-        <h1 class="title-serif text-4xl sm:text-5xl md:text-6xl font-bold leading-none tracking-tight">
-          <span class="text-white">Heartbound Series</span><br>
-          <span class="text-red-500">Trends</span>
-        </h1>
-        <p class="text-gray-400 text-sm mt-3">Select an episode to view generators</p>
-      </div>
-            <div class="hidden sm:block text-right fade-up fade-up-d1 pt-2">
-        <p class="script-font text-base md:text-lg text-white/70 tracking-wide font-light whitespace-nowrap">
-          Together We Make It Happen
-        </p>
-        <div class="ml-auto mt-1.5 w-20 h-px bg-red-500/60 rounded-full"></div>
-      </div>
+  <div id="episode-list" class="max-w-4xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-10">
+    <button type="button" onclick="showGenerators('1')" class="card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]">
+      <p class="text-red-500 text-sm mb-1">EP</p>
+      <p class="text-2xl font-bold">1</p>
+    </button>
+  </div>
+
+  <div id="generators-section" class="hidden max-w-4xl mx-auto px-4 pb-10">
+    <div class="flex items-center justify-between mb-6 gap-3">
+      <h2 class="text-2xl font-bold">Episode <span id="current-ep">1</span> – Generators</h2>
+      <button type="button" onclick="backToEpisodes()" class="text-sm text-red-500 hover:text-red-400">← Back to Episodes</button>
     </div>
+    <div id="generators-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
   </div>
 
-  <!-- EP buttons -->
-  <div id="episode-list" class="relative z-10 max-w-4xl mx-auto px-4 flex flex-wrap gap-2 sm:gap-2.5 mb-8 fade-up fade-up-d2"></div>
-
-  <!-- Generators -->
-  <div id="generators-section" class="hidden relative z-10 max-w-4xl mx-auto px-4 pb-8">
-    <div class="flex items-center justify-between mb-5 gap-3">
-      <h2 class="text-xl sm:text-2xl font-bold">
-        Episode <span id="current-ep" class="text-red-500">1</span>
-        <span class="text-gray-500 font-normal text-base">– Generators</span>
-      </h2>
-      <button type="button" onclick="backToEpisodes()"
-        class="text-sm text-red-400 hover:text-red-300 transition">← Back</button>
-    </div>
-    <div id="generators-list" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2"></div>
-  </div>
-
-  <!-- divider -->
-  <div class="relative z-10 max-w-4xl mx-auto px-4 mb-8">
-    <div class="h-px bg-gradient-to-r from-transparent via-red-800/50 to-transparent"></div>
-  </div>
-
-  <!-- Guide Trending -->
-  <section class="relative z-10 max-w-4xl mx-auto px-4 pb-24 fade-up fade-up-d3">
-        <div class="flex items-center gap-2.5 mb-1">
-      <span class="w-1 h-5 bg-red-500 rounded-full"></span>
-      <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Guide Trending</h2>
-    </div>
-    <p class="text-gray-400 text-sm mb-5 ml-3.5">How to trend Heartbound on each platform.</p>
-
-       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-      <a href="guide-x.html" class="guide-card block">
-        <div class="icon-box">
-          <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" class="w-6 h-6">
+  <section class="max-w-4xl mx-auto px-4 pb-20">
+    <h2 class="text-xl font-bold mb-1">Guide Trending</h2>
+    <p class="text-gray-400 text-sm mb-4">How to trend Heartbound on each platform.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+      <a href="guide-x.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
+          <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" class="w-7 h-7">
         </div>
-        <p class="text-xs font-semibold tracking-wider text-zinc-300">X</p>
+        <p class="text-lg font-bold">X</p>
       </a>
-      <a href="guide-instagram.html" class="guide-card block">
-        <div class="icon-box">
-          <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" class="w-6 h-6">
+      <a href="guide-instagram.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
+          <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" class="w-7 h-7">
         </div>
-        <p class="text-xs font-semibold tracking-wider text-zinc-300">INSTAGRAM</p>
+        <p class="text-lg font-bold">Instagram</p>
       </a>
-      <a href="guide-tiktok.html" class="guide-card block">
-        <div class="icon-box">
-          <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok" class="w-6 h-6">
+      <a href="guide-tiktok.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
+          <img src="https://cdn.simpleicons.org/tiktok/ffffff" alt="TikTok" class="w-7 h-7">
         </div>
-        <p class="text-xs font-semibold tracking-wider text-zinc-300">TIKTOK</p>
+        <p class="text-lg font-bold">TikTok</p>
       </a>
-      <a href="guide-facebook.html" class="guide-card block">
-        <div class="icon-box">
-          <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" class="w-6 h-6">
+      <a href="guide-facebook.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
+          <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" class="w-7 h-7">
         </div>
-        <p class="text-xs font-semibold tracking-wider text-zinc-300">FACEBOOK</p>
+        <p class="text-lg font-bold">Facebook</p>
       </a>
-      <a href="guide-youtube.html" class="guide-card block">
-        <div class="icon-box">
-          <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" class="w-6 h-6">
+      <a href="guide-youtube.html" class="card bg-zinc-900/90 border border-zinc-700 rounded-2xl p-5 text-center min-h-[140px] block">
+        <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-zinc-800 flex items-center justify-center">
+          <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" class="w-7 h-7">
         </div>
-        <p class="text-xs font-semibold tracking-wider text-zinc-300">YOUTUBE</p>
+        <p class="text-lg font-bold">YouTube</p>
       </a>
     </div>
   </section>
@@ -227,80 +94,53 @@
   <script src="common.js"></script>
   <script>
     let data = {};
-    const TOTAL_EPS = 10;
-    const TOTAL_GENS = 10;
-    let activeEp = null;
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (json) { data = json || {}; renderEpisodes(); })
-      .catch(function () { data = { episodes: {} }; renderEpisodes(); });
+      .catch(function () { data = { episodes: { "1": [] } }; renderEpisodes(); });
 
     function renderEpisodes() {
       var container = document.getElementById("episode-list");
+      var eps = Object.keys((data && data.episodes) || {});
+      if (!eps.length) eps = ["1"];
+      eps.sort(function (a, b) { return a - b; });
       container.innerHTML = "";
-      for (var i = 1; i <= TOTAL_EPS; i++) {
-        var ep = String(i);
+      eps.forEach(function (ep) {
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "ep-btn";
-        btn.textContent = "EP " + ep;
-        btn.dataset.ep = ep;
-        btn.onclick = (function (n) {
-          return function () { showGenerators(n); };
-        })(ep);
+        btn.className = "card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 text-center hover:border-red-500 min-h-[88px]";
+        btn.innerHTML = '<p class="text-red-500 text-sm mb-1">EP</p><p class="text-2xl font-bold">' + ep + "</p>";
+        btn.onclick = function () { showGenerators(ep); };
         container.appendChild(btn);
-      }
-    }
-
-    function setActiveEp(epNumber) {
-      activeEp = epNumber;
-      var buttons = document.querySelectorAll(".ep-btn");
-      buttons.forEach(function (b) {
-        if (b.dataset.ep === String(epNumber)) b.classList.add("active");
-        else b.classList.remove("active");
       });
     }
 
-        function showGenerators(epNumber) {
-      // Bấm lại cùng EP → tắt
-      if (activeEp === String(epNumber)) {
-        backToEpisodes();
-        return;
-      }
-
-      setActiveEp(epNumber);
+    function showGenerators(epNumber) {
+      document.getElementById("episode-list").classList.add("hidden");
       document.getElementById("generators-section").classList.remove("hidden");
       document.getElementById("current-ep").innerText = epNumber;
-
       var container = document.getElementById("generators-list");
       container.innerHTML = "";
-      container.className = "flex flex-wrap gap-2 sm:gap-2.5";
       var list = (data.episodes && data.episodes[epNumber]) || [];
-
-      for (var i = 1; i <= TOTAL_GENS; i++) {
-        var gen = list[i - 1] || {};
-        var name = "Gen " + i;
-        var url = gen.url || "#";
-
-        var a = document.createElement("a");
-        a.href = url;
-        if (url && url !== "#") {
-          a.target = "_blank";
-          a.rel = "noopener";
-        }
-        a.className = "gen-card";
-        a.innerHTML = '<span>' + name + "</span>";
-        container.appendChild(a);
+      if (!list.length) {
+        container.innerHTML = '<p class="text-gray-400">No generators yet.</p>';
+        return;
       }
+      list.forEach(function (gen) {
+        var a = document.createElement("a");
+        a.href = gen.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.className = "card bg-zinc-900/90 border border-zinc-700 rounded-xl p-5 hover:border-red-500 block";
+        a.innerHTML = '<p class="text-red-500 text-sm mb-1">' + gen.name + '</p><p class="font-medium">' + gen.title + '</p><p class="text-xs text-gray-500 mt-2">Click to open →</p>';
+        container.appendChild(a);
+      });
     }
 
     function backToEpisodes() {
       document.getElementById("generators-section").classList.add("hidden");
-      activeEp = null;
-      document.querySelectorAll(".ep-btn").forEach(function (b) {
-        b.classList.remove("active");
-      });
+      document.getElementById("episode-list").classList.remove("hidden");
     }
   </script>
 </body>
