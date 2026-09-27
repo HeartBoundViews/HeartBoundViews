@@ -400,4 +400,55 @@
       (introData.schedule || []).forEach(function (m) {
         var items = (m.items || []).map(function (it) {
           var hash = it.hashtag || it.hastag || "";
-          var keyw = 
+          var keyw = it.keyword || "";
+          var loc = it.location || "";
+          var extra = "";
+          if (loc) extra += '<p class="text-sm text-gray-400 mt-1.5 break-all">📍 ' + loc + "</p>";
+          if (keyw) extra += '<p class="text-sm text-gray-300 mt-1.5 break-all">🔑 ' + keyw + "</p>";
+          if (hash) extra += '<p class="text-sm text-red-400 mt-1 break-all">' + tagText(hash) + "</p>";
+
+          var copyParts = [];
+          if (keyw) copyParts.push(keyw);
+          if (hash) copyParts.push(tagText(hash));
+          var copyPayload = copyParts.join("\n");
+
+          var copyBtn = "";
+          if (copyPayload) {
+            copyBtn =
+              '<button type="button" class="copy-btn" data-copy="' +
+              copyPayload.replace(/"/g, "&quot;") +
+              '">📋 Copy keyword & hashtag</button>';
+          }
+
+          return '<div class="py-4 border-b border-zinc-800/80 last:border-0">' +
+            '<div class="flex gap-4">' +
+              '<p class="w-24 sm:w-28 text-red-400 text-sm sm:text-base shrink-0 font-medium">' + (it.date || "") + "</p>" +
+              '<div class="min-w-0">' +
+                '<p class="text-base sm:text-lg font-medium text-zinc-100">' + (it.title || "") + "</p>" +
+                '<p class="text-sm text-gray-400 mt-0.5">' + (it.note || "") + "</p>" +
+                extra +
+                copyBtn +
+              "</div>" +
+            "</div></div>";
+        }).join("");
+        var el = document.createElement("div");
+        el.className = "panel-box mb-4";
+        el.innerHTML = '<h3 class="text-lg sm:text-xl font-bold text-zinc-100 mb-2">' + (m.month || "") + "</h3>" + items;
+        box.appendChild(el);
+      });
+
+      box.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var text = btn.getAttribute("data-copy") || "";
+          copyText(text, btn);
+        });
+      });
+    }
+
+    function backToHome() {
+      hideAll();
+      document.getElementById("intro-home").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
