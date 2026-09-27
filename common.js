@@ -171,16 +171,15 @@
 
   const style = document.createElement("style");
   style.textContent =
+      style.textContent =
     "html{font-size:16px}" +
-    "body{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased}" +
+    "body{font-family:Inter,system-ui,-apple-system,sans-serif;font-size:1rem;line-height:1.5;-webkit-font-smoothing:antialiased;background:#070707}" +
     ".ps-display{font-family:'Cormorant Garamond',Georgia,serif;letter-spacing:0.01em}" +
     "@keyframes ps-blink{0%,100%{opacity:1}50%{opacity:.45}}" +
     ".ps-alert-blink{animation:ps-blink 1.2s ease-in-out infinite}" +
-    "#ps-alert-panel{max-height:0;overflow:hidden;transition:max-height .35s ease}" +
-    "#ps-alert-panel.open{max-height:420px;overflow-y:auto}" +
+    "#ps-alert-panel.open{display:block !important}" +
     "body.ps-has-tabbar{padding-bottom:72px}" +
     "@media (min-width:768px){body.ps-has-tabbar{padding-bottom:0}}";
-  document.head.appendChild(style);
 
   const desktopNav = NAV.map(function (n) {
     const active = here === n.href || (here === "" && n.href === "index.html");
