@@ -348,18 +348,27 @@
     });
   }
 
-  function setupAlertToggle() {
+    function setupAlertToggle() {
     var btn = document.getElementById("ps-alert-btn");
     var panel = document.getElementById("ps-alert-panel");
     var closeBtn = document.getElementById("ps-alert-close");
     if (!btn || !panel) return;
-    btn.addEventListener("click", function () { panel.classList.toggle("open"); });
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      panel.classList.toggle("open");
+      panel.classList.toggle("hidden");
+    });
     if (closeBtn) {
       closeBtn.addEventListener("click", function (e) {
         e.stopPropagation();
         panel.classList.remove("open");
+        panel.classList.add("hidden");
       });
     }
+    document.addEventListener("click", function () {
+      panel.classList.remove("open");
+      panel.classList.add("hidden");
+    });
   }
 
   setupAlertToggle();
