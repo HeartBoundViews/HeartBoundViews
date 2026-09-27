@@ -4,43 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PerthSanta Engagement Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { background: #070707; min-height: 100vh; }
-  .hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 35%;
-    display: block;
-  }
-  .hero-title {
-    font-family: "Cormorant Garamond", Georgia, serif;
-    text-shadow: 0 2px 16px rgba(0,0,0,.75), 0 1px 3px rgba(0,0,0,.9);
-  }
-  .hero-sub {
-    font-family: "Outfit", system-ui, sans-serif;
-    letter-spacing: 0.22em;
-    text-shadow: 0 2px 12px rgba(0,0,0,.7);
-  }
-  .menu-row { transition: background 0.2s ease, border-color 0.2s ease; }
-  .menu-row:active { background: rgba(39, 39, 42, 0.9); }
-  @media (min-width: 640px) {
-    .menu-row:hover { border-color: rgba(185, 28, 28, 0.5); background: rgba(24, 24, 27, 0.95); }
-  }
-</style>
+    html, body {
+      background: #070707 !important;
+      min-height: 100vh;
+    }
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      display: block;
+    }
+    .hero-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      text-shadow: 0 2px 16px rgba(0,0,0,.75), 0 1px 3px rgba(0,0,0,.9);
+    }
+    .hero-sub {
+      font-family: "Outfit", system-ui, sans-serif;
+      letter-spacing: 0.22em;
+      text-shadow: 0 2px 12px rgba(0,0,0,.7);
+    }
+    .menu-row { transition: background 0.2s ease, border-color 0.2s ease; }
+    .menu-row:active { background: rgba(39, 39, 42, 0.9); }
+    @media (min-width: 640px) {
+      .menu-row:hover { border-color: rgba(185, 28, 28, 0.5); background: rgba(24, 24, 27, 0.95); }
+    }
+  </style>
 </head>
-<body class="text-white">
+<body class="text-white bg-[#070707]">
 
-  <main class="max-w-6xl mx-auto px-4 pt-4 sm:pt-6 pb-8">
+  <main class="max-w-6xl mx-auto px-4 pt-3 sm:pt-4 pb-6">
 
-              <!-- HERO -->
-    <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-4 sm:mb-5 h-[150px] sm:h-[260px] md:h-[320px]">
+    <!-- HERO -->
+    <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-red-900/30 bg-black mb-3 sm:mb-4 h-[160px] sm:h-[300px] md:h-[380px]">
       <img src="images/hero-perthsanta.jpg" alt="PerthSanta" class="hero-img absolute inset-0">
       <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"></div>
 
