@@ -14,7 +14,6 @@
 <body class="text-white">
   <div class="max-w-5xl mx-auto px-4 pt-8 pb-6">
     <h1 class="text-3xl md:text-4xl font-bold mb-2">Introduce</h1>
-    <p class="text-gray-400"></p>
   </div>
 
   <div id="intro-home">
@@ -33,7 +32,7 @@
 
         <a id="inf-job-link" href="#" target="_blank" rel="noopener"
           class="card bg-zinc-900 border border-zinc-700 rounded-2xl p-5 block">
-          <h3 class="text-lg font-bold">Job Summary</h3>
+          <h3 class="text-lg font-bold">Job Info Summary</h3>
         </a>
       </div>
     </section>
@@ -111,8 +110,14 @@
         '<img src="' + (p.photo || "") + '" alt="" class="w-20 h-20 rounded-xl object-cover bg-zinc-800 mb-4">' +
         '<p class="text-xs text-gray-500 mb-1">Full name</p>' +
         '<p class="font-medium mb-3">' + (p.fullname || p.name || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Thai name</p>' +
+        '<p class="font-medium mb-3">' + (p.thaiName || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Role</p>' +
+        '<p class="font-medium mb-3">' + (p.role || "—") + "</p>" +
         '<p class="text-xs text-gray-500 mb-1">Birthday</p>' +
-        '<p class="font-medium mb-4">' + (p.born || "—") + "</p>" +
+        '<p class="font-medium mb-3">' + (p.born || "—") + "</p>" +
+        '<p class="text-xs text-gray-500 mb-1">Agency</p>' +
+        '<p class="font-medium mb-4">' + (p.agency || "—") + "</p>" +
         '<p class="text-xs text-gray-500 mb-2">Socials</p>' +
         '<div class="flex flex-wrap gap-2">' + socialLinks(p) + "</div>";
     }
