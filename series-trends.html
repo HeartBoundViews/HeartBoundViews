@@ -82,7 +82,7 @@
         var ep = String(i);
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "px-4 py-2 rounded-full text-sm font-medium border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-red-500 hover:text-white transition";
+      btn.className = "w-14 h-14 sm:w-16 sm:h-16 rounded-xl text-sm font-medium border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-red-500 hover:text-white transition flex items-center justify-center";
         btn.textContent = "EP " + ep;
         btn.onclick = (function (n) {
           return function () { showGenerators(n); };
