@@ -193,10 +193,10 @@
   bar.className = "sticky top-0 z-50 border-b border-zinc-800/80 bg-black/90 backdrop-blur-md";
    bar.innerHTML =
     '<div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-3">' +
-      '<a href="index.html" class="flex items-center gap-2.5 min-w-0 shrink-0">' +
-        '<img src="images/logo.png" alt="Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover bg-zinc-800 border border-zinc-700" onerror="this.style.display=\'none\'">' +
-        '<span class="font-bold tracking-tight text-white text-base sm:text-lg">PerthSanta</span>' +
-      "</a>" +
+      '<a href="index.html" class="flex items-center gap-1 min-w-0 shrink-0">' +
+  '<img src="images/logo.png" alt="Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover" onerror="this.style.display=\'none\'">' +
+  '<span class="font-bold tracking-tight text-white text-base sm:text-lg -ml-0.5">PerthSanta</span>' +
+"</a>" +
       '<div class="flex-1"></div>' +
       '<nav class="hidden md:flex flex-wrap items-center gap-1">' + desktopNav + "</nav>" +
       '<a href="introduce.html" class="px-3 py-1.5 rounded-full text-sm border border-zinc-600 text-zinc-200 hover:border-red-500 hover:text-white font-medium" data-i18n="navIntro">' +
