@@ -9,20 +9,34 @@
     body { background: #070707; min-height: 100vh; }
     .card { transition: all 0.25s ease; }
     .card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(185, 28, 28, 0.2); }
-    .profile-photo {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
-      object-position: center;
-      background: #18181b;
+    .polaroid {
+      background: #f4efe6;
+      padding: 12px 12px 36px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
     }
-    .profile-photo-lg {
+    .polaroid img {
       width: 100%;
-      max-width: 280px;
       aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center;
-      background: #18181b;
+      background: #1a1a1a;
+      display: block;
+    }
+    .polaroid-lg {
+      background: #f4efe6;
+      max-width: 280px;
+      margin: 0 auto 8px;
+      padding: 14px 14px 42px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+      transform: rotate(-1.5deg);
+    }
+    .polaroid-lg img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      object-position: center;
+      background: #1a1a1a;
+      display: block;
     }
   </style>
 </head>
@@ -137,8 +151,8 @@
         el.className = "card bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden text-left";
         el.onclick = function () { showProfile(i); };
         el.innerHTML =
-          '<img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '" class="profile-photo">' +
-          '<div class="p-4">' +
+          '<div class="p-4 pb-2"><div class="polaroid"><img src="' + (p.photo || "") + '" alt="' + (p.name || "") + '"></div></div>' +
+          '<div class="px-4 pb-4">' +
             '<h3 class="text-xl font-bold">' + (p.name || "") + "</h3>" +
             '<p class="text-base text-gray-400 truncate">' + (p.fullname || "") + "</p>" +
           "</div>";
@@ -156,18 +170,18 @@
       document.getElementById("detail-name").innerText = p.name || "Profile";
       document.getElementById("next-btn").classList.toggle("hidden", i >= list.length - 1);
       document.getElementById("detail-box").innerHTML =
-        '<img src="' + (p.photo || "") + '" alt="" class="profile-photo-lg rounded-2xl mb-5 mx-auto">' +
-        '<p class="text-sm text-gray-500 mb-1">Full name</p>' +
-        '<p class="text-lg font-medium mb-4">' + (p.fullname || p.name || "—") + "</p>" +
-        '<p class="text-sm text-gray-500 mb-1">Thai name</p>' +
-        '<p class="text-lg font-medium mb-4">' + (p.thaiName || "—") + "</p>" +
-        '<p class="text-sm text-gray-500 mb-1">Role</p>' +
-        '<p class="text-lg font-medium mb-4">' + (p.role || "—") + "</p>" +
-        '<p class="text-sm text-gray-500 mb-1">Birthday</p>' +
-        '<p class="text-lg font-medium mb-4">' + (p.born || "—") + "</p>" +
-        '<p class="text-sm text-gray-500 mb-1">Agency</p>' +
-        '<p class="text-lg font-medium mb-5">' + (p.agency || "—") + "</p>" +
-        '<p class="text-sm text-gray-500 mb-2">Socials</p>' +
+        '<div class="polaroid-lg"><img src="' + (p.photo || "") + '" alt=""></div>' +
+        '<p class="text-base text-gray-400 mb-1 mt-6">Full name</p>' +
+        '<p class="text-xl font-semibold mb-4">' + (p.fullname || p.name || "—") + "</p>" +
+        '<p class="text-base text-gray-400 mb-1">Thai name</p>' +
+        '<p class="text-xl font-semibold mb-4">' + (p.thaiName || "—") + "</p>" +
+        '<p class="text-base text-gray-400 mb-1">Role</p>' +
+        '<p class="text-xl font-semibold mb-4">' + (p.role || "—") + "</p>" +
+        '<p class="text-base text-gray-400 mb-1">Birthday</p>' +
+        '<p class="text-xl font-semibold mb-4">' + (p.born || "—") + "</p>" +
+        '<p class="text-base text-gray-400 mb-1">Agency</p>' +
+        '<p class="text-xl font-semibold mb-5">' + (p.agency || "—") + "</p>" +
+        '<p class="text-base text-gray-400 mb-2">Socials</p>' +
         '<div class="flex flex-wrap gap-3">' + socialLinks(p) + "</div>";
     }
 
