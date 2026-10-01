@@ -20,7 +20,6 @@
       letter-spacing: 0.04em;
     }
 
-    /* subtle fade-in */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -30,7 +29,6 @@
     .fade-up-d2 { animation-delay: 0.16s; }
     .fade-up-d3 { animation-delay: 0.24s; }
 
-   /* EP buttons */
     .ep-btn {
       width: 3.25rem; height: 3.25rem;
       border-radius: 0.75rem;
@@ -56,7 +54,7 @@
       background: linear-gradient(145deg, #7f1d1d 0%, #1c0909 55%, #0a0a0a 100%);
       box-shadow: 0 0 0 1px #ef4444, 0 0 18px rgba(239, 68, 68, 0.4);
     }
-       /* Generator cards — cùng size EP */
+
     .gen-card {
       width: 3.25rem; height: 3.25rem;
       display: flex; align-items: center; justify-content: center;
@@ -81,8 +79,8 @@
       box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
       transform: translateY(-2px);
     }
-    /* Guide platform cards */
-        .guide-card {
+
+    .guide-card {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -119,7 +117,7 @@
       flex-shrink: 0;
     }
     .guide-card:hover::after { opacity: 1; }
-    /* soft red glow corners */
+
     .page-glow {
       pointer-events: none;
       position: fixed;
@@ -129,51 +127,15 @@
       opacity: 0.12;
       z-index: 0;
     }
-
-    .copy-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: linear-gradient(145deg, #7f1d1d 0%, #450a0a 100%);
-      border: 1px solid #991b1b;
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border-radius: 9999px;
-      padding: 0.4rem 0.9rem;
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .copy-btn:hover {
-      background: linear-gradient(145deg, #991b1b 0%, #7f1d1d 100%);
-      box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
-    }
-    .copy-btn.copied {
-      background: linear-gradient(145deg, #166534 0%, #14532d 100%);
-      border-color: #22c55e;
-    }
-    .kh-badge {
-      width: 1.35rem;
-      height: 1.35rem;
-      border-radius: 0.4rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
   </style>
 </head>
 <body class="text-white relative overflow-x-hidden">
-    <!-- Background image mờ -->
   <div class="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
     <img src="images/series-trends.jpg" alt=""
          class="w-full h-full object-cover opacity-95"
          style="filter: blur(3px) brightness(0.8) saturate(0.95); transform: scale(1.08);">
     <div class="absolute inset-0 bg-[#070707]/15"></div>
   </div>
-  <!-- soft background glows -->
   <div class="page-glow bg-red-600" style="top:-80px;right:-60px;"></div>
   <div class="page-glow bg-red-800" style="bottom:10%;left:-80px;"></div>
 
@@ -186,7 +148,7 @@
         </h1>
         <p class="text-gray-400 text-sm mt-3">Select an episode to view generators</p>
       </div>
-            <div class="hidden sm:block text-right fade-up fade-up-d1 pt-2">
+      <div class="hidden sm:block text-right fade-up fade-up-d1 pt-2">
         <p class="script-font text-base md:text-lg text-white/70 tracking-wide font-light whitespace-nowrap">
           Together We Make It Happen
         </p>
@@ -195,10 +157,8 @@
     </div>
   </div>
 
-  <!-- EP buttons -->
   <div id="episode-list" class="relative z-10 max-w-4xl mx-auto px-4 flex flex-wrap gap-2 sm:gap-2.5 mb-8 fade-up fade-up-d2"></div>
 
-  <!-- Generators -->
   <div id="generators-section" class="hidden relative z-10 max-w-4xl mx-auto px-4 pb-8">
     <div class="flex items-center justify-between mb-5 gap-3">
       <h2 class="text-xl sm:text-2xl font-bold">
@@ -211,35 +171,42 @@
     <div id="generators-list" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2"></div>
   </div>
 
-  <!-- divider -->
   <div class="relative z-10 max-w-4xl mx-auto px-4 mb-8">
     <div class="h-px bg-gradient-to-r from-transparent via-red-800/50 to-transparent"></div>
   </div>
 
-  <!-- Trend X today -->
   <section class="relative z-10 max-w-4xl mx-auto px-4 pb-8 fade-up fade-up-d3">
     <div class="flex items-center gap-2.5 mb-1">
       <span class="w-1 h-5 bg-red-500 rounded-full"></span>
       <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Trend X today</h2>
     </div>
     <p class="text-gray-400 text-sm mb-5 ml-3.5">Today’s event from the schedule.</p>
-    <div id="trend-today-box" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+      <a href="event-today.html" class="guide-card block">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+        </div>
+        <p class="text-xs font-semibold tracking-wider text-zinc-300">EVENT TODAY</p>
+      </a>
+    </div>
   </section>
 
-  <!-- divider -->
   <div class="relative z-10 max-w-4xl mx-auto px-4 mb-8">
     <div class="h-px bg-gradient-to-r from-transparent via-red-800/50 to-transparent"></div>
   </div>
 
-  <!-- Guide Trending -->
   <section class="relative z-10 max-w-4xl mx-auto px-4 pb-24 fade-up fade-up-d3">
-        <div class="flex items-center gap-2.5 mb-1">
+    <div class="flex items-center gap-2.5 mb-1">
       <span class="w-1 h-5 bg-red-500 rounded-full"></span>
       <h2 class="title-serif text-2xl sm:text-3xl font-bold text-red-500">Guide Trending</h2>
     </div>
     <p class="text-gray-400 text-sm mb-5 ml-3.5">How to trend Heartbound on each platform.</p>
 
-       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
       <a href="guide-x.html" class="guide-card block">
         <div class="icon-box">
           <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" class="w-6 h-6">
@@ -282,16 +249,8 @@
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
-      .then(function (json) {
-        data = json || {};
-        renderEpisodes();
-        renderTrendToday();
-      })
-      .catch(function () {
-        data = { episodes: {} };
-        renderEpisodes();
-        renderTrendToday();
-      });
+      .then(function (json) { data = json || {}; renderEpisodes(); })
+      .catch(function () { data = { episodes: {} }; renderEpisodes(); });
 
     function renderEpisodes() {
       var container = document.getElementById("episode-list");
@@ -319,8 +278,7 @@
       });
     }
 
-        function showGenerators(epNumber) {
-      // Bấm lại cùng EP → tắt
+    function showGenerators(epNumber) {
       if (activeEp === String(epNumber)) {
         backToEpisodes();
         return;
@@ -347,7 +305,7 @@
           a.rel = "noopener";
         }
         a.className = "gen-card";
-        a.innerHTML = '<span>' + name + "</span>";
+        a.innerHTML = "<span>" + name + "</span>";
         container.appendChild(a);
       }
     }
@@ -357,142 +315,6 @@
       activeEp = null;
       document.querySelectorAll(".ep-btn").forEach(function (b) {
         b.classList.remove("active");
-      });
-    }
-
-    function tagText(v) {
-      if (!v) return "";
-      return String(v).charAt(0) === "#" ? v : "#" + v;
-    }
-
-    function copyText(text, btn) {
-      if (!text) return;
-      var done = function () {
-        var old = btn.textContent;
-        btn.textContent = "Copied";
-        btn.classList.add("copied");
-        setTimeout(function () {
-          btn.textContent = old;
-          btn.classList.remove("copied");
-        }, 1200);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(function () {});
-      } else {
-        var ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand("copy"); done(); } catch (e) {}
-        document.body.removeChild(ta);
-      }
-    }
-
-    function parseEventRange(dateStr, monthStr) {
-      var now = new Date();
-      function makeDate(day, monthName, year) {
-        var d = new Date(day + " " + monthName + " " + year);
-        if (isNaN(d.getTime())) return null;
-        d.setHours(0, 0, 0, 0);
-        return d;
-      }
-      try {
-        var yearMatch = (monthStr || "").match(/\d{4}/);
-        var year = yearMatch ? yearMatch[0] : String(now.getFullYear());
-        var monthMatch = (monthStr || "").match(/[A-Za-z]+/);
-        var monthFromGroup = monthMatch ? monthMatch[0] : "";
-        var s = String(dateStr || "").trim();
-
-        var range = s.match(/^(\d{1,2})\s*[-–]\s*(\d{1,2})\s+([A-Za-z]+)$/);
-        if (range) {
-          var start = makeDate(range[1], range[3], year);
-          var end = makeDate(range[2], range[3], year);
-          if (!start || !end) return null;
-          return { start: start, end: end };
-        }
-
-        var single = s.match(/^(\d{1,2})\s+([A-Za-z]+)$/);
-        if (single) {
-          var one = makeDate(single[1], single[2], year);
-          return one ? { start: one, end: one } : null;
-        }
-
-        var dayOnly = s.match(/^(\d{1,2})$/);
-        if (dayOnly && monthFromGroup) {
-          var oneDay = makeDate(dayOnly[1], monthFromGroup, year);
-          return oneDay ? { start: oneDay, end: oneDay } : null;
-        }
-
-        return null;
-      } catch (e) {
-        return null;
-      }
-    }
-
-    function renderTrendToday() {
-      var box = document.getElementById("trend-today-box");
-      if (!box) return;
-      box.innerHTML = "";
-
-      var schedule = (data.introduce && data.introduce.schedule) || data.schedule || [];
-      var today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      var hits = [];
-      schedule.forEach(function (m) {
-        (m.items || []).forEach(function (it) {
-          var range = parseEventRange(it.date, m.month);
-          if (!range) return;
-          if (today.getTime() >= range.start.getTime() && today.getTime() <= range.end.getTime()) {
-            hits.push(it);
-          }
-        });
-      });
-
-      if (!hits.length) {
-        box.innerHTML =
-          '<div class="rounded-xl border border-zinc-800 bg-black/40 p-4 text-sm text-gray-400">No event on the schedule for today.</div>';
-        return;
-      }
-
-      hits.forEach(function (it) {
-        var keyw = it.keyword || "";
-        var hash = tagText(it.hashtag || it.hastag || "");
-        var loc = it.location || "";
-        var note = it.note || "";
-
-        var keyRow = keyw
-          ? '<div class="flex items-start gap-2 mt-3">' +
-              '<span class="kh-badge bg-zinc-800 text-zinc-100 border border-zinc-600">K</span>' +
-              '<p class="text-xs text-gray-200 leading-snug break-all flex-1">' + keyw + "</p>" +
-              '<button type="button" class="copy-btn !mt-0 !text-[10px] !py-1 !px-2 shrink-0" data-copy="' +
-              keyw.replace(/"/g, "&quot;") + '">Copy</button></div>'
-          : "";
-
-        var hashRow = hash
-          ? '<div class="flex items-start gap-2 mt-2">' +
-              '<span class="kh-badge bg-red-950 text-red-300 border border-red-800">#</span>' +
-              '<p class="text-xs text-red-400 leading-snug break-all flex-1">' + hash + "</p>" +
-              '<button type="button" class="copy-btn !mt-0 !text-[10px] !py-1 !px-2 shrink-0" data-copy="' +
-              hash.replace(/"/g, "&quot;") + '">Copy</button></div>'
-          : "";
-
-        var card = document.createElement("div");
-        card.className = "relative rounded-xl p-4 border bg-gradient-to-br from-[#2a0a0a] to-[#0a0a0a] border-red-500 ring-1 ring-red-500/40";
-        card.innerHTML =
-          '<span class="absolute top-2 right-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-600 text-white">TODAY</span>' +
-          '<p class="text-[11px] tracking-wider text-red-300 mb-1">' + (it.date || "") + "</p>" +
-          '<h3 class="text-sm sm:text-base font-bold text-white pr-14 leading-snug">' + (it.title || "") + "</h3>" +
-          (note ? '<p class="text-xs text-gray-400 mt-1.5">' + note + "</p>" : "") +
-          (loc ? '<p class="text-xs text-gray-400 mt-1 leading-snug break-all">' + loc + "</p>" : "") +
-          keyRow + hashRow;
-        box.appendChild(card);
-      });
-
-      box.querySelectorAll(".copy-btn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          copyText(btn.getAttribute("data-copy") || "", btn);
-        });
       });
     }
   </script>
