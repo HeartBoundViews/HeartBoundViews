@@ -12,6 +12,7 @@
     html, body { background: #070707; min-height: 100vh; }
     body { font-family: Inter, system-ui, sans-serif; color: #fff; }
     .title-serif { font-family: "Cormorant Garamond", Georgia, serif; }
+
     .gen-card {
       width: 3.25rem; height: 3.25rem;
       display: flex; align-items: center; justify-content: center;
@@ -24,7 +25,6 @@
       font-size: 0.65rem;
       font-weight: 600;
       color: #d4d4d8;
-      line-height: 1.15;
     }
     @media (min-width: 640px) {
       .gen-card { width: 3.75rem; height: 3.75rem; font-size: 0.75rem; }
@@ -36,121 +36,191 @@
       box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
       transform: translateY(-2px);
     }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.75rem;
+      background: linear-gradient(145deg, #7f1d1d 0%, #450a0a 100%);
+      border: 1px solid #991b1b;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      padding: 0.4rem 0.9rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: linear-gradient(145deg, #991b1b 0%, #7f1d1d 100%);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.35);
+    }
+    .copy-btn.copied {
+      background: linear-gradient(145deg, #166534 0%, #14532d 100%);
+      border-color: #22c55e;
+    }
   </style>
 </head>
 <body class="text-white">
-  <div class="max-w-4xl mx-auto px-4 pt-8 pb-20">
-    <a href="series-trends.html" class="text-sm text-red-500 hover:text-red-400">← Back to Trends</a>
-    <h1 class="title-serif text-3xl sm:text-4xl font-bold mt-4 mb-2">
+  <div class="max-w-4xl mx-auto px-4 pt-10 pb-24">
+    <a href="series-trends.html" class="inline-block text-sm text-red-400 hover:text-red-300 mb-6">← Back to Trends</a>
+
+    <h1 class="title-serif text-4xl sm:text-5xl font-bold leading-none mb-2">
       Event <span class="text-red-500">Today</span>
     </h1>
-    <p class="text-gray-400 text-sm mb-6">Live from the schedule. Updates automatically each day.</p>
+    <p class="text-gray-400 text-sm mb-8">Live from the schedule. Updates automatically each day.</p>
 
-    <div id="event-list" class="space-y-4 mb-8"></div>
+    <div id="event-box"></div>
 
-    <p class="text-gray-400 text-sm mb-3">Post / comment generator</p>
-    <div class="flex flex-wrap gap-2 sm:gap-2.5">
-      <a id="trend-x-gen" href="#" class="gen-card"><span>Gen 1</span></a>
+    <div class="mt-10">
+      <p class="text-sm text-gray-400 mb-3">Post / comment generator</p>
+      <a id="event-gen" href="#" class="gen-card">
+        <span>Gen 1</span>
+      </a>
     </div>
   </div>
 
-  <script src="common.js"></script>
   <script>
-    var TREND_X_GEN_URL = "#";
+    var EVENT_TODAY_GEN_URL = "#"; // chèn link Gen sau
 
-    var MONTHS = {
-      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
-    };
-
-    function todayICT() {
-      var now = new Date();
-      var utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      return new Date(utc + 7 * 3600000);
+    function tagText(v) {
+      if (!v) return "";
+      return String(v).charAt(0) === "#" ? v : "#" + v;
     }
 
-    function startOfDay(d) {
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    }
-
-    function parseScheduleRange(dateStr, year) {
-      var m = String(dateStr || "").trim().match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?\s+([A-Za-z]{3})/);
-      if (!m) return null;
-      var month = MONTHS[m[3].toLowerCase()];
-      if (month == null) return null;
-      var startDay = parseInt(m[1], 10);
-      var endDay = m[2] ? parseInt(m[2], 10) : startDay;
-      return {
-        start: new Date(year, month, startDay),
-        end: new Date(year, month, endDay)
+    function copyText(text, btn) {
+      if (!text) return;
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = "Copied";
+        btn.classList.add("copied");
+        setTimeout(function () {
+          btn.textContent = old;
+          btn.classList.remove("copied");
+        }, 1200);
       };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () {});
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
     }
 
-    function getTodayEvents(data) {
-      var schedule = (data.introduce && data.introduce.schedule) || [];
-      var today = startOfDay(todayICT());
-      var hits = [];
-      schedule.forEach(function (block) {
-        var yearMatch = String(block.month || "").match(/(\d{4})/);
-        var year = yearMatch ? parseInt(yearMatch[1], 10) : today.getFullYear();
-        (block.items || []).forEach(function (item) {
-          var range = parseScheduleRange(item.date, year);
-          if (!range) return;
-          if (today >= startOfDay(range.start) && today <= startOfDay(range.end)) {
-            hits.push(item);
-          }
-        });
-      });
-      return hits;
+    function parseEventRange(dateStr, monthStr) {
+      var now = new Date();
+      function makeDate(day, monthName, year) {
+        var d = new Date(day + " " + monthName + " " + year);
+        if (isNaN(d.getTime())) return null;
+        d.setHours(0, 0, 0, 0);
+        return d;
+      }
+      try {
+        var yearMatch = (monthStr || "").match(/\d{4}/);
+        var year = yearMatch ? yearMatch[0] : String(now.getFullYear());
+        var monthMatch = (monthStr || "").match(/[A-Za-z]+/);
+        var monthFromGroup = monthMatch ? monthMatch[0] : "";
+        var s = String(dateStr || "").trim();
+
+        var range = s.match(/^(\d{1,2})\s*[-–]\s*(\d{1,2})\s+([A-Za-z]+)$/);
+        if (range) {
+          var start = makeDate(range[1], range[3], year);
+          var end = makeDate(range[2], range[3], year);
+          if (!start || !end) return null;
+          return { start: start, end: end };
+        }
+        var single = s.match(/^(\d{1,2})\s+([A-Za-z]+)$/);
+        if (single) {
+          var one = makeDate(single[1], single[2], year);
+          return one ? { start: one, end: one } : null;
+        }
+        var dayOnly = s.match(/^(\d{1,2})$/);
+        if (dayOnly && monthFromGroup) {
+          var oneDay = makeDate(dayOnly[1], monthFromGroup, year);
+          return oneDay ? { start: oneDay, end: oneDay } : null;
+        }
+        return null;
+      } catch (e) {
+        return null;
+      }
     }
 
-    function esc(s) {
-      return String(s == null ? "" : s)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
-
-    function renderEvent(ev, label) {
-      var tag = ev.hastag || "—";
-      if (tag !== "—" && tag !== "TBA" && tag.charAt(0) !== "#") tag = "#" + tag;
-      return (
-        '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 sm:p-6">' +
-          '<p class="text-xs uppercase tracking-wider text-red-400 mb-2">' + esc(ev.title || "Event") + "</p>" +
-          '<p class="text-sm text-zinc-200 mb-1"><span class="text-zinc-500">Date:</span> ' + esc(ev.date) + " · " + label + "</p>" +
-          '<p class="text-sm text-zinc-200 mb-1"><span class="text-zinc-500">Trend time:</span> ' + esc(ev.note || "TBA") + "</p>" +
-          '<p class="text-sm text-zinc-200 mb-1 break-words"><span class="text-zinc-500">Keyword:</span> ' + esc(ev.keyword || "—") + "</p>" +
-          '<p class="text-sm text-zinc-200 break-words"><span class="text-zinc-500">Tag:</span> ' + esc(tag) + "</p>" +
-        "</div>"
-      );
+    function formatNumDate(range) {
+      if (!range || !range.start) return "";
+      var d = range.start;
+      return (d.getDate()) + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
     }
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var box = document.getElementById("event-list");
-        var today = todayICT();
-        var label = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
-        var events = getTodayEvents(data || {});
+      .then(render)
+      .catch(function () { render({}); });
 
-        if (!events.length) {
-          box.innerHTML = '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"><p class="text-sm text-zinc-300">No event scheduled for today (' + label + ').</p></div>';
-        } else {
-          box.innerHTML = events.map(function (ev) { return renderEvent(ev, label); }).join("");
-        }
+    function render(data) {
+      var box = document.getElementById("event-box");
+      var gen = document.getElementById("event-gen");
+      gen.href = EVENT_TODAY_GEN_URL || "#";
+      if (EVENT_TODAY_GEN_URL && EVENT_TODAY_GEN_URL !== "#") {
+        gen.target = "_blank";
+        gen.rel = "noopener";
+      }
 
-        var link = document.getElementById("trend-x-gen");
-        if (link && TREND_X_GEN_URL && TREND_X_GEN_URL !== "#") {
-          link.href = TREND_X_GEN_URL;
-          link.target = "_blank";
-          link.rel = "noopener";
-        }
-      })
-      .catch(function () {
-        document.getElementById("event-list").innerHTML =
-          '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"><p class="text-sm text-zinc-300">Could not load schedule.</p></div>';
+      var schedule = (data.introduce && data.introduce.schedule) || data.schedule || [];
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      var hits = [];
+      schedule.forEach(function (m) {
+        (m.items || []).forEach(function (it) {
+          var range = parseEventRange(it.date, m.month);
+          if (!range) return;
+          if (today.getTime() >= range.start.getTime() && today.getTime() <= range.end.getTime()) {
+            hits.push({ it: it, range: range });
+          }
+        });
       });
+
+      if (!hits.length) {
+        box.innerHTML = '<div class="rounded-2xl border border-zinc-800 bg-[#141414] p-5 text-sm text-gray-400">No event on the schedule for today.</div>';
+        return;
+      }
+
+      box.innerHTML = "";
+      hits.forEach(function (hit) {
+        var it = hit.it;
+        var keyw = it.keyword || "";
+        var hash = tagText(it.hashtag || it.hastag || "");
+        var copyParts = [];
+        if (keyw) copyParts.push(keyw);
+        if (hash) copyParts.push(hash);
+        var copyPayload = copyParts.join("\n\n");
+
+        var card = document.createElement("div");
+        card.className = "rounded-2xl border border-zinc-700 bg-[#141414] p-5 sm:p-6 mb-3";
+        card.innerHTML =
+          '<p class="text-red-400 text-sm font-semibold tracking-wide mb-3">' + (it.title || "") + "</p>" +
+          '<p class="text-sm text-gray-300 mb-1">Date: <span class="text-white font-medium">' + (it.date || "") + " · " + formatNumDate(hit.range) + "</span></p>" +
+          '<p class="text-sm text-gray-300 mb-1">Trend time: <span class="text-white font-medium">' + (it.note || "") + "</span></p>" +
+          '<p class="text-sm text-gray-300 mb-1">🔑 <span class="text-white font-medium">' + (keyw || "—") + "</span></p>" +
+          '<p class="text-sm text-gray-300">Tag: <span class="text-red-400 font-medium">' + (hash || "—") + "</span></p>" +
+          (copyPayload
+            ? '<button type="button" class="copy-btn !text-[10px] !py-1 !px-2" data-copy="' +
+              copyPayload.replace(/"/g, "&quot;") + '">📋 Copy</button>'
+            : "");
+        box.appendChild(card);
+      });
+
+      box.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          copyText(btn.getAttribute("data-copy") || "", btn);
+        });
+      });
+    }
   </script>
 </body>
 </html>
