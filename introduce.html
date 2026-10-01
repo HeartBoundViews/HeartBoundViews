@@ -402,22 +402,50 @@
       var today = new Date(now);
       today.setHours(0, 0, 0, 0);
 
-      function parseEventDate(dateStr, monthStr) {
-        try {
-          var yearMatch = (monthStr || "").match(/\d{4}/);
-          var year = yearMatch ? yearMatch[0] : now.getFullYear();
-          var d = new Date(dateStr + " " + year);
-          if (isNaN(d.getTime())) return null;
-          d.setHours(0, 0, 0, 0);
-          return d;
-        } catch (e) { return null; }
+      function makeDate(day, monthName, year) {
+        var d = new Date(day + " " + monthName + " " + year);
+        if (isNaN(d.getTime())) return null;
+        d.setHours(0, 0, 0, 0);
+        return d;
       }
 
-      function parseEventTime(note) {
-        if (!note) return null;
-        var m = String(note).match(/(\d{1,2}):(\d{2})/);
-        if (!m) return null;
-        return { h: parseInt(m[1], 10), min: parseInt(m[2], 10) };
+      function parseEventRange(dateStr, monthStr) {
+        try {
+          var yearMatch = (monthStr || "").match(/\d{4}/);
+          var year = yearMatch ? yearMatch[0] : String(now.getFullYear());
+          var monthMatch = (monthStr || "").match(/[A-Za-z]+/);
+          var monthFromGroup = monthMatch ? monthMatch[0] : "";
+          var s = String(dateStr || "").trim();
+
+          var range = s.match(/^(\d{1,2})\s*[-–]\s*(\d{1,2})\s+([A-Za-z]+)$/);
+          if (range) {
+            var start = makeDate(range[1], range[3], year);
+            var end = makeDate(range[2], range[3], year);
+            if (!start || !end) return null;
+            return { start: start, end: end };
+          }
+
+          var single = s.match(/^(\d{1,2})\s+([A-Za-z]+)$/);
+          if (single) {
+            var one = makeDate(single[1], single[2], year);
+            if (!one) return null;
+            return { start: one, end: one };
+          }
+
+          var dayOnly = s.match(/^(\d{1,2})$/);
+          if (dayOnly && monthFromGroup) {
+            var oneDay = makeDate(dayOnly[1], monthFromGroup, year);
+            if (!oneDay) return null;
+            return { start: oneDay, end: oneDay };
+          }
+
+          var d = new Date(s + " " + year);
+          if (isNaN(d.getTime())) return null;
+          d.setHours(0, 0, 0, 0);
+          return { start: d, end: d };
+        } catch (e) {
+          return null;
+        }
       }
 
       (introData.schedule || []).forEach(function (m) {
@@ -427,24 +455,15 @@
           var loc = it.location || "";
           var dateStr = it.date || "";
 
-          var eventDate = parseEventDate(dateStr, m.month);
+          var range = parseEventRange(dateStr, m.month);
           var isPast = false;
           var isToday = false;
 
-          if (eventDate) {
-            if (eventDate.getTime() < today.getTime()) {
+          if (range) {
+            if (today.getTime() > range.end.getTime()) {
               isPast = true;
-            } else if (eventDate.getTime() === today.getTime()) {
+            } else if (today.getTime() >= range.start.getTime() && today.getTime() <= range.end.getTime()) {
               isToday = true;
-              var t = parseEventTime(it.note);
-              if (t) {
-                var endApprox = new Date(eventDate);
-                endApprox.setHours(t.h + 2, t.min, 0, 0);
-                if (now > endApprox) {
-                  isPast = true;
-                  isToday = false;
-                }
-              }
             }
           }
 
