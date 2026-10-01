@@ -108,6 +108,7 @@
         document.body.appendChild(ta);
         ta.select();
         try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.appendChild(ta);
         document.body.removeChild(ta);
       }
     }
@@ -201,7 +202,7 @@
         var copyPayload = copyParts.join("\n\n");
 
         var card = document.createElement("div");
-        card.className = "rounded-2xl border border-zinc-700 bg-[#141414] p-5 sm:p-6 mb-3";
+        card.className = "rounded-2xl border border-zinc-700 bg-[#141414] p-3 sm:p-4 mb-3 max-w-sm";
         card.innerHTML =
           '<p class="text-red-400 text-sm font-semibold tracking-wide mb-3">' + (it.title || "") + "</p>" +
           '<p class="text-sm text-gray-300 mb-1">Date: <span class="text-white font-medium">' + (it.date || "") + " · " + formatNumDate(hit.range) + "</span></p>" +
