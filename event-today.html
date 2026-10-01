@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Today - PerthSanta Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Inter:wght@400;500;600;700;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body { background: #070707; min-height: 100vh; }
+    body { font-family: Inter, system-ui, sans-serif; color: #fff; }
+    .title-serif { font-family: "Cormorant Garamond", Georgia, serif; }
+    .gen-card {
+      width: 3.25rem; height: 3.25rem;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
+      border: 1px solid #3f3f46;
+      border-radius: 0.75rem;
+      text-align: center;
+      padding: 0.25rem;
+      transition: all 0.25s ease;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #d4d4d8;
+      line-height: 1.15;
+    }
+    @media (min-width: 640px) {
+      .gen-card { width: 3.75rem; height: 3.75rem; font-size: 0.75rem; }
+    }
+    .gen-card:hover {
+      border-color: #ef4444;
+      color: #fff;
+      background: linear-gradient(145deg, #450a0a 0%, #1c0909 50%, #0c0c0c 100%);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.3);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body class="text-white">
+  <div class="max-w-4xl mx-auto px-4 pt-8 pb-20">
+    <a href="series-trends.html" class="text-sm text-red-500 hover:text-red-400">← Back to Trends</a>
+    <h1 class="title-serif text-3xl sm:text-4xl font-bold mt-4 mb-2">
+      Event <span class="text-red-500">Today</span>
+    </h1>
+    <p class="text-gray-400 text-sm mb-6">Live from the schedule. Updates automatically each day.</p>
+
+    <div id="event-list" class="space-y-4 mb-8"></div>
+
+    <p class="text-gray-400 text-sm mb-3">Post / comment generator</p>
+    <div class="flex flex-wrap gap-2 sm:gap-2.5">
+      <a id="trend-x-gen" href="#" class="gen-card"><span>Gen 1</span></a>
+    </div>
+  </div>
+
+  <script src="common.js"></script>
+  <script>
+    var TREND_X_GEN_URL = "#";
+
+    var MONTHS = {
+      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+    };
+
+    function todayICT() {
+      var now = new Date();
+      var utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      return new Date(utc + 7 * 3600000);
+    }
+
+    function startOfDay(d) {
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    function parseScheduleRange(dateStr, year) {
+      var m = String(dateStr || "").trim().match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?\s+([A-Za-z]{3})/);
+      if (!m) return null;
+      var month = MONTHS[m[3].toLowerCase()];
+      if (month == null) return null;
+      var startDay = parseInt(m[1], 10);
+      var endDay = m[2] ? parseInt(m[2], 10) : startDay;
+      return {
+        start: new Date(year, month, startDay),
+        end: new Date(year, month, endDay)
+      };
+    }
+
+    function getTodayEvents(data) {
+      var schedule = (data.introduce && data.introduce.schedule) || [];
+      var today = startOfDay(todayICT());
+      var hits = [];
+      schedule.forEach(function (block) {
+        var yearMatch = String(block.month || "").match(/(\d{4})/);
+        var year = yearMatch ? parseInt(yearMatch[1], 10) : today.getFullYear();
+        (block.items || []).forEach(function (item) {
+          var range = parseScheduleRange(item.date, year);
+          if (!range) return;
+          if (today >= startOfDay(range.start) && today <= startOfDay(range.end)) {
+            hits.push(item);
+          }
+        });
+      });
+      return hits;
+    }
+
+    function esc(s) {
+      return String(s == null ? "" : s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function renderEvent(ev, label) {
+      var tag = ev.hastag || "—";
+      if (tag !== "—" && tag !== "TBA" && tag.charAt(0) !== "#") tag = "#" + tag;
+      return (
+        '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5 sm:p-6">' +
+          '<p class="text-xs uppercase tracking-wider text-red-400 mb-2">' + esc(ev.title || "Event") + "</p>" +
+          '<p class="text-sm text-zinc-200 mb-1"><span class="text-zinc-500">Date:</span> ' + esc(ev.date) + " · " + label + "</p>" +
+          '<p class="text-sm text-zinc-200 mb-1"><span class="text-zinc-500">Trend time:</span> ' + esc(ev.note || "TBA") + "</p>" +
+          '<p class="text-sm text-zinc-200 mb-1 break-words"><span class="text-zinc-500">Keyword:</span> ' + esc(ev.keyword || "—") + "</p>" +
+          '<p class="text-sm text-zinc-200 break-words"><span class="text-zinc-500">Tag:</span> ' + esc(tag) + "</p>" +
+        "</div>"
+      );
+    }
+
+    fetch("data.json?t=" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var box = document.getElementById("event-list");
+        var today = todayICT();
+        var label = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+        var events = getTodayEvents(data || {});
+
+        if (!events.length) {
+          box.innerHTML = '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"><p class="text-sm text-zinc-300">No event scheduled for today (' + label + ').</p></div>';
+        } else {
+          box.innerHTML = events.map(function (ev) { return renderEvent(ev, label); }).join("");
+        }
+
+        var link = document.getElementById("trend-x-gen");
+        if (link && TREND_X_GEN_URL && TREND_X_GEN_URL !== "#") {
+          link.href = TREND_X_GEN_URL;
+          link.target = "_blank";
+          link.rel = "noopener";
+        }
+      })
+      .catch(function () {
+        document.getElementById("event-list").innerHTML =
+          '<div class="bg-zinc-900 border border-zinc-700 rounded-2xl p-5"><p class="text-sm text-zinc-300">Could not load schedule.</p></div>';
+      });
+  </script>
+</body>
+</html>
