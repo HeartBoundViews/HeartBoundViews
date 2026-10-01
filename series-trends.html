@@ -190,16 +190,16 @@
     </div>
     <p class="text-gray-400 text-sm mb-5 ml-3.5">Today’s event from the schedule.</p>
 
-    <div class="flex flex-wrap gap-2 sm:gap-2.5 mb-4">
-      <button type="button" id="event-today-btn" class="gen-card" onclick="toggleEventToday()">
-        <span>Event<br>Today</span>
-      </button>
-    </div>
-
-    <div id="event-today-panel" class="hidden mb-4 rounded-xl border border-zinc-700 bg-zinc-900/80 px-4 py-4"></div>
-
-    <div class="flex flex-wrap gap-2 sm:gap-2.5">
-      <a id="trend-x-gen" href="#" class="gen-card"><span>Gen 1</span></a>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+      <a href="event-today.html" class="guide-card block">
+        <div class="icon-box">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+            <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+            <path d="M3 10h18M8 3v4M16 3v4"></path>
+          </svg>
+        </div>
+        <p class="text-xs font-semibold tracking-wider text-zinc-300">EVENT TODAY</p>
+      </a>
     </div>
   </section>
 
@@ -256,20 +256,11 @@
     const TOTAL_EPS = 10;
     const TOTAL_GENS = 10;
     let activeEp = null;
-    var TREND_X_GEN_URL = "#";
 
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
-      .then(function (json) {
-        data = json || {};
-        renderEpisodes();
-        renderTrendXToday();
-      })
-      .catch(function () {
-        data = { episodes: {} };
-        renderEpisodes();
-        renderTrendXToday();
-      });
+      .then(function (json) { data = json || {}; renderEpisodes(); })
+      .catch(function () { data = { episodes: {} }; renderEpisodes(); });
 
     function renderEpisodes() {
       var container = document.getElementById("episode-list");
@@ -336,107 +327,6 @@
       document.querySelectorAll(".ep-btn").forEach(function (b) {
         b.classList.remove("active");
       });
-    }
-
-    var MONTHS = {
-      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
-    };
-
-    function todayICT() {
-      var now = new Date();
-      var utc = now.getTime() + now.getTimezoneOffset() * 60000;
-      return new Date(utc + 7 * 3600000);
-    }
-
-    function startOfDay(d) {
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    }
-
-    function parseScheduleRange(dateStr, year) {
-      var m = String(dateStr || "").trim().match(/^(\d{1,2})(?:\s*-\s*(\d{1,2}))?\s+([A-Za-z]{3})/);
-      if (!m) return null;
-      var month = MONTHS[m[3].toLowerCase()];
-      if (month == null) return null;
-      var startDay = parseInt(m[1], 10);
-      var endDay = m[2] ? parseInt(m[2], 10) : startDay;
-      return {
-        start: new Date(year, month, startDay),
-        end: new Date(year, month, endDay)
-      };
-    }
-
-    function getTodayEvents() {
-      var schedule = (data.introduce && data.introduce.schedule) || [];
-      var today = startOfDay(todayICT());
-      var hits = [];
-      schedule.forEach(function (block) {
-        var yearMatch = String(block.month || "").match(/(\d{4})/);
-        var year = yearMatch ? parseInt(yearMatch[1], 10) : today.getFullYear();
-        (block.items || []).forEach(function (item) {
-          var range = parseScheduleRange(item.date, year);
-          if (!range) return;
-          if (today >= startOfDay(range.start) && today <= startOfDay(range.end)) {
-            hits.push(item);
-          }
-        });
-      });
-      return hits;
-    }
-
-    function esc(s) {
-      return String(s == null ? "" : s)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
-    }
-
-    function renderTrendXToday() {
-      var link = document.getElementById("trend-x-gen");
-      if (link && TREND_X_GEN_URL && TREND_X_GEN_URL !== "#") {
-        link.href = TREND_X_GEN_URL;
-        link.target = "_blank";
-        link.rel = "noopener";
-      }
-    }
-
-    function renderEventTodayPanel() {
-      var panel = document.getElementById("event-today-panel");
-      if (!panel) return;
-      var events = getTodayEvents();
-      var today = todayICT();
-      var label = today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
-
-      if (!events.length) {
-        panel.innerHTML = '<p class="text-sm text-zinc-300">No event scheduled for today (' + label + ').</p>';
-        return;
-      }
-
-      panel.innerHTML = events.map(function (ev) {
-        var tag = ev.hastag || "—";
-        if (tag !== "—" && tag !== "TBA" && tag.charAt(0) !== "#") tag = "#" + tag;
-        return (
-          '<div class="mb-3 last:mb-0">' +
-            '<p class="text-xs uppercase tracking-wider text-red-400 mb-1">' + esc(ev.title || "Event") + "</p>" +
-            '<p class="text-sm text-zinc-200"><span class="text-zinc-500">Date:</span> ' + esc(ev.date) + " · " + label + "</p>" +
-            '<p class="text-sm text-zinc-200"><span class="text-zinc-500">Trend time:</span> ' + esc(ev.note || "TBA") + "</p>" +
-            '<p class="text-sm text-zinc-200 break-words"><span class="text-zinc-500">Keyword:</span> ' + esc(ev.keyword || "—") + "</p>" +
-            '<p class="text-sm text-zinc-200 break-words"><span class="text-zinc-500">Tag:</span> ' + esc(tag) + "</p>" +
-          "</div>"
-        );
-      }).join("");
-    }
-
-    function toggleEventToday() {
-      var panel = document.getElementById("event-today-panel");
-      if (!panel) return;
-      if (panel.classList.contains("hidden")) {
-        renderEventTodayPanel();
-        panel.classList.remove("hidden");
-      } else {
-        panel.classList.add("hidden");
-      }
     }
   </script>
 </body>
