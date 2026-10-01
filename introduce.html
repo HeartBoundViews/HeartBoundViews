@@ -420,14 +420,6 @@
         return { h: parseInt(m[1], 10), min: parseInt(m[2], 10) };
       }
 
-      var forLabels = {
-        PERTH: "Perth",
-        SANTA: "Santa",
-        DOMIIA: "Domiia",
-        PS: "PS",
-        PSD: "PSD"
-      };
-
       (introData.schedule || []).forEach(function (m) {
         var itemsHtml = (m.items || []).map(function (it) {
           var hash = it.hashtag || it.hastag || "";
@@ -456,22 +448,43 @@
             }
           }
 
-          // Who's job
+          // Who's job — hearts only
           var forRaw = it.for || it.who || [];
           if (typeof forRaw === "string") forRaw = [forRaw];
-          var forHtml = forRaw.length
-            ? '<div class="flex flex-wrap gap-1 mb-1.5">' +
-              forRaw.map(function (f) {
-                var label = forLabels[String(f).toUpperCase()] || f;
-                return '<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-red-900/60 border border-red-700/50 text-red-200">' + label + "</span>";
+
+          var expanded = [];
+          forRaw.forEach(function (f) {
+            var key = String(f).toUpperCase();
+            if (key === "PS") {
+              expanded.push("PERTH", "SANTA");
+            } else if (key === "PSD") {
+              expanded.push("PERTH", "SANTA", "DOMIIA");
+            } else {
+              expanded.push(key);
+            }
+          });
+          expanded = expanded.filter(function (v, i, a) { return a.indexOf(v) === i; });
+
+          var heartMap = {
+            PERTH: "🖤",
+            SANTA: "🤍",
+            DOMIIA: "❤️"
+          };
+
+          var forHtml = expanded.length
+            ? '<div class="flex flex-wrap gap-1.5 mb-2">' +
+              expanded.map(function (f) {
+                var emoji = heartMap[f];
+                if (!emoji) return "";
+                return '<span class="text-[16px] leading-none" title="' + f + '">' + emoji + "</span>";
               }).join("") +
               "</div>"
             : "";
 
           var extra = "";
-          if (loc)  extra += '<p class="text-[11px] text-gray-400 mt-1.5 leading-snug break-all">📍 ' + loc + "</p>";
-          if (keyw) extra += '<p class="text-[11px] text-gray-300 mt-1 leading-snug break-all">🔑 ' + keyw + "</p>";
-          if (hash) extra += '<p class="text-[11px] text-red-400 mt-0.5 leading-snug break-all">' + tagText(hash) + "</p>";
+          if (loc)  extra += '<p class="text-xs text-gray-400 mt-1.5 leading-snug break-all">📍 ' + loc + "</p>";
+          if (keyw) extra += '<p class="text-xs text-gray-300 mt-1 leading-snug break-all">🔑 ' + keyw + "</p>";
+          if (hash) extra += '<p class="text-xs text-red-400 mt-0.5 leading-snug break-all">' + tagText(hash) + "</p>";
 
           var copyParts = [];
           if (keyw) copyParts.push(keyw);
@@ -504,10 +517,10 @@
           return (
             '<div class="' + cardClass + '"' + styleExtra + ">" +
               badge +
-              '<p class="text-red-400 text-xs font-semibold mb-1">' + dateStr + "</p>" +
+              '<p class="text-red-400 text-sm font-semibold mb-1.5">' + dateStr + "</p>" +
               forHtml +
-              '<p class="text-sm font-medium text-zinc-100 leading-snug pr-7">' + (it.title || "") + "</p>" +
-              '<p class="text-[11px] text-gray-400 mt-0.5">' + (it.note || "") + "</p>" +
+              '<p class="text-[15px] font-medium text-zinc-100 leading-snug pr-7">' + (it.title || "") + "</p>" +
+              '<p class="text-xs text-gray-400 mt-1">' + (it.note || "") + "</p>" +
               extra +
               copyBtn +
             "</div>"
