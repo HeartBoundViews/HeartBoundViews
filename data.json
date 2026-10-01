@@ -435,21 +435,44 @@
       }
     ],
     "schedule": [
+  {
+    "month": "September 2026",
+    "items": [
       {
-        "month": "September 2026",
-        "items": [
-          {
-            "date": "27 Sep",
-            "title": "GrabFood Payweek ถูกกว่าชัวร์* กับ Perth Santa",
-            "note": "18:00 ICT",
-            "location": "Facebook & YouTube: GMMTV OFFICIAL • Facebook: GrabTH",
-            "hastag": "GrabFoodถูกกว่าชัวร์xPERTHSANTA",
-            "keyword": "GRABFOOD WITH PERTHSANTA",
-            "for": ["PS"]
-          }
-        ]
+        "date": "27 Sep",
+        "title": "GrabFood Payweek ถูกกว่าชัวร์* กับ Perth Santa",
+        "note": "18:00 ICT",
+        "location": "Facebook & YouTube: GMMTV OFFICIAL • Facebook: GrabTH",
+        "hastag": "GrabFoodถูกกว่าชัวร์xPERTHSANTA",
+        "keyword": "GRABFOOD WITH PERTHSANTA",
+        "for": ["PS"]
       }
-    ],
+    ]
+  },
+  {
+    "month": "October 2026",
+    "items": [
+      {
+        "date": "1 Oct",
+        "title": "SHOPEE LIVE",
+        "note": "07:30 PM (UTC+7)",
+        "location": "LIVE SHOPEE",
+        "hastag": "",
+        "keyword": "PERTHSANTA",
+        "for": ["PS"]
+      },
+      {
+        "date": "3-4 Oct",
+        "title": "DR.ALLY PAI AEW TUAY KAN TEE CHANG MAI WITH PERTH",
+        "note": "TBA",
+        "location": "PRIVATE EVENT",
+        "hastag": "",
+        "keyword": "PERTH",
+        "for": ["PERTH"]
+      }
+    ]
+  }
+]
     "infJobUrl": "https://njpoyw2fdnkg.jp.larksuite.com/wiki/SrIrw6Ur8iTOtukrtomjO0OZpYd?sheet=f8cdf3"
   }
 }
