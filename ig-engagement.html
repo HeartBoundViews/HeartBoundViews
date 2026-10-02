@@ -35,41 +35,65 @@
     }
     .ig-card .panel {
       position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 2;
-      padding: 8px 10px 10px;
-      border-radius: 0.75rem;
-      background: rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 10px 10px;
+      border-radius: 0.85rem;
+      background: rgba(0, 0, 0, 0.62);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
     }
     .ig-card::after {
       content: ""; position: absolute; left: 15%; right: 15%; bottom: 0; height: 2px;
       background: linear-gradient(90deg, transparent, #ef4444, transparent); opacity: 0.7; z-index: 3;
     }
-    .stat-box { background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.5rem; padding: 0.28rem 0.15rem; }
-    @keyframes statBlink { 0%, 100% { opacity: 1; color: #f87171; } 50% { opacity: 0.28; color: #fecaca; } }
+
+    .stat-box {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 0.55rem;
+      padding: 0.4rem 0.2rem;
+    }
+    .stat-label { color: #e5e5e5; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .stat-num { color: #fff; font-size: 13px; font-weight: 700; }
+    @keyframes statBlink { 0%, 100% { opacity: 1; color: #f87171; } 50% { opacity: 0.35; color: #fecaca; } }
     .stat-box.pending .stat-num { animation: statBlink 1.1s ease-in-out infinite; }
     .stat-box.done .stat-num { color: #4ade80; animation: none; }
 
-    .action-row { display: flex; align-items: center; gap: 6px; }
+    .action-row { display: flex; align-items: stretch; gap: 8px; }
     .gen-btn {
-      width: 2.35rem; height: 2.35rem; flex: 0 0 auto;
-      display: inline-flex; align-items: center; justify-content: center;
-      background: linear-gradient(145deg, #2a0a0a 0%, #18181b 50%, #0c0c0c 100%);
-      border: 1px solid #3f3f46; border-radius: 0.55rem;
-      font-size: 0.62rem; font-weight: 600; color: #d4d4d8; line-height: 1.05;
+      flex: 0 0 42%;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border: 1px solid #f87171;
+      background: linear-gradient(145deg, #3f0d0d 0%, #1a1a1a 70%);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .gen-btn:hover { border-color: #ef4444; color: #fff; }
+    .gen-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 18px rgba(239, 68, 68, 0.55);
+    }
     .ig-open-btn {
-      flex: 1; min-width: 0;
-      text-align: center;
-      background: linear-gradient(145deg, #7f1d1d 0%, #450a0a 100%);
-      border: 1px solid #991b1b; color: #fff;
-      font-size: 0.72rem; font-weight: 600;
-      border-radius: 9999px; padding: 0.48rem 0.6rem;
-      white-space: nowrap;
+      flex: 1;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border: 1px solid #991b1b;
+      background: linear-gradient(145deg, #991b1b 0%, #450a0a 100%);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
     }
-    .ig-open-btn:hover { background: linear-gradient(145deg, #991b1b 0%, #7f1d1d 100%); }
+    .ig-open-btn:hover { background: linear-gradient(145deg, #b91c1c 0%, #7f1d1d 100%); }
   </style>
 </head>
 <body class="text-white relative overflow-x-hidden">
@@ -109,8 +133,8 @@
     }
     function statBox(label, value, done) {
       return '<div class="stat-box ' + (done ? "done" : "pending") + '">' +
-        '<p class="text-[8px] text-gray-400 uppercase tracking-wider">' + label + "</p>" +
-        '<p class="stat-num font-semibold text-[11px] mt-0.5">' + formatNum(value) + "</p></div>";
+        '<p class="stat-label">' + label + "</p>" +
+        '<p class="stat-num mt-0.5">' + formatNum(value) + "</p></div>";
     }
     fetch("data.json?t=" + Date.now())
       .then(function (r) { return r.json(); })
@@ -126,7 +150,7 @@
         posts.forEach(function (post) {
           var gens = "";
           (post.generators || []).forEach(function (g, i) {
-            var label = (g.name || ("Gen " + (i + 1))).replace("Generator ", "G");
+            var label = (g.name || ("Gen " + (i + 1))).replace("Generator ", "Gen ");
             gens += '<a href="' + (g.url || "#") + '" target="_blank" rel="noopener" class="gen-btn"><span>' + label + "</span></a>";
           });
           var card = document.createElement("article");
@@ -135,9 +159,9 @@
             '<img class="bg" alt="">' +
             '<div class="shade"></div>' +
             '<div class="panel">' +
-              '<p class="text-red-300 text-[11px] font-medium meta truncate"></p>' +
-              '<h3 class="font-bold text-[13px] mt-0.5 mb-1.5 leading-snug text-white line-clamp-1"></h3>' +
-              '<div class="grid grid-cols-3 gap-1 text-center mb-1.5">' +
+              '<p class="text-red-300 text-xs font-medium meta truncate"></p>' +
+              '<h3 class="font-bold text-sm mt-0.5 mb-2 leading-snug text-white line-clamp-1"></h3>' +
+              '<div class="grid grid-cols-3 gap-1.5 text-center mb-2">' +
                 statBox("Like", post.like, post.likeDone === true) +
                 statBox("Comment", post.comment, post.commentDone === true) +
                 statBox("Share", post.share, post.shareDone === true) +
