@@ -466,16 +466,15 @@ async function generateAndCopy() {
   return text;
 }
 function openXApp(text) {
-  const msg = encodeURIComponent(text);
-  const ua = navigator.userAgent || "";
-  if (/Android/i.test(ua)) {
-    window.location.href = "intent://post?message=" + msg + "#Intent;scheme=twitter;package=com.twitter.android;end";
+  const web = "https://x.com/intent/post?text=" + encodeURIComponent(text);
+  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+  if (!mobile) {
+    const tab = window.open(web, "_blank", "noopener");
+    if (!tab) window.location.href = web;
     return;
   }
-  if (/iPhone|iPad|iPod/i.test(ua)) {
-    window.location.href = "twitter://post?message=" + msg;
-    return;
-  }
+  window.location.href = web;
+}
   const frame = document.createElement("iframe");
   frame.style.display = "none";
   frame.src = "twitter://post?message=" + msg;
