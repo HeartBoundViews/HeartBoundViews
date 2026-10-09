@@ -186,7 +186,7 @@ const banks = {
       "3CE가 이 조합을 다음 시즌까지 이어가면 좋겠다."
     ],
     extra: [
-      "첫 터치 후에도 마감이 부드럽다.",
+      "첫 터치 후에도 마감이 부드러다.",
       "인트로보다 스와치 구간이 볼 만하다.",
       "배경이 조용해서 색이 남는다.",
       "라이브 밖에서도 상상되는 핑크다."
@@ -474,12 +474,6 @@ function openXApp(text) {
     return;
   }
   window.location.href = web;
-}
-  const frame = document.createElement("iframe");
-  frame.style.display = "none";
-  frame.src = "twitter://post?message=" + msg;
-  document.body.appendChild(frame);
-  setTimeout(() => frame.remove(), 1200);
 }
 async function postX() {
   let text = localStorage.getItem(LS_CURRENT) || "";
