@@ -466,14 +466,22 @@ async function generateAndCopy() {
   return text;
 }
 function openXApp(text) {
-  const web = "https://x.com/intent/post?text=" + encodeURIComponent(text);
-  const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || "");
-  if (!mobile) {
-    const tab = window.open(web, "_blank", "noopener");
-    if (!tab) window.location.href = web;
-    return;
+  const msg = encodeURIComponent(text);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || "");
+  const isAndroid = /Android/i.test(navigator.userAgent || "");
+
+  if (isIOS) {
+    // Mở app X trên iPhone, nếu không có app sẽ tự chuyển hướng sang web
+    window.location.href = "twitter://post?message=" + msg;
+    setTimeout(() => {
+      window.location.href = "https://x.com/intent/post?text=" + msg;
+    }, 1000);
+  } else if (isAndroid) {
+    // Mở app X trên Android qua Intent
+    window.location.href = "intent://post?message=" + msg + "#Intent;package=com.twitter.android;scheme=twitter;end;";
+  } else {
+    window.open("https://x.com/intent/post?text=" + msg, "_blank", "noopener");
   }
-  window.location.href = web;
 }
 async function postX() {
   let text = localStorage.getItem(LS_CURRENT) || "";
