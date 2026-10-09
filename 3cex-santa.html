@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3CExSanta</title>
+<style>
+  :root {
+    --bg: #f6e4e7; --card: #fffafb; --ink: #1c1c1c; --muted: #6d5c5f;
+    --line: #ead5d8; --berry: #c45164; --berry-dark: #9b3044; --black: #161616;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--ink);
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    background:
+      radial-gradient(900px 420px at 8% -10%, #f8c9d2 0%, transparent 60%),
+      radial-gradient(700px 380px at 110% 0%, #f3d5c4 0%, transparent 55%),
+      linear-gradient(180deg, #fbeff1, var(--bg));
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 16px 48px; }
+  h1 { margin: 0; font-size: 32px; letter-spacing: -0.04em; }
+  .sub { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+  .counter {
+    margin-top: 18px; display: inline-block; background: var(--black); color: #fff;
+    border-radius: 999px; padding: 8px 14px; font-size: 14px;
+  }
+  .note { margin: 12px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .card {
+    margin-top: 18px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; padding: 16px; min-height: 190px;
+    box-shadow: 0 10px 30px rgba(90, 30, 40, 0.05);
+  }
+  pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: inherit; font-size: 16px; line-height: 1.55; }
+  .meta { margin-top: 10px; color: var(--muted); font-size: 12px; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  button {
+    appearance: none; border: 0; border-radius: 14px; padding: 14px 12px;
+    font-size: 15px; font-weight: 650; cursor: pointer;
+  }
+  button:active { transform: translateY(1px); }
+  #gen { background: var(--berry); color: #fff; }
+  #gen:hover { background: var(--berry-dark); }
+  #post { background: var(--black); color: #fff; }
+  .toast {
+    position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%) translateY(12px);
+    background: var(--black); color: #fff; padding: 10px 14px; border-radius: 999px;
+    font-size: 13px; opacity: 0; pointer-events: none; transition: .2s ease;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 640px) {
+    .actions { grid-template-columns: 1fr; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>3CExSanta</h1>
+    <p class="sub">10.10 Velvet Strawberry Shortcake</p>
+    <div class="counter" id="count">Copied: 0 comments</div>
+    <p class="note">Press Space to Generate and Copy. Post X opens the composer in the X app with this line, then loads the next one. Lines stay within a regular X post.</p>
+    <div class="card">
+      <pre id="out">Your line will appear here.</pre>
+      <div class="meta" id="meta"></div>
+    </div>
+    <div class="actions">
+      <button id="gen" type="button">Generate &amp; Copy</button>
+      <button id="post" type="button">Post X</button>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+<script>
+const KEY = "SANTA 3CE VVSTRAWBERRY";
+const TAGS = "#3CEVelvetxSanta\n#Santapp";
+const LS_COUNT = "cex_santa_count";
+const LS_USED = "cex_santa_used";
+const LS_CURRENT = "cex_santa_current";
+
+const banks = {
+  en: {
+    praise: [
+      "Santa looks at ease on the 3CE live, and the pink velvet sits cleanly on him.",
+      "Santa keeps the swatch calm, so the three strawberry shades are easy to compare.",
+      "There is a soft focus to Santa here that makes the velvet tint feel wearable.",
+      "Santa does not rush the color, which is why this live is easy to stay with."
+    ],
+    collab: [
+      "Santa and 3CE fit this strawberry story. The pink reads before the pitch does.",
+      "This collab stays simple: Santa, a velvet tint, and a tidy 10.10 shop live.",
+      "3CE putting Santa on the new pink set was a clear choice, not a random guest spot.",
+      "Santa x 3CE feels like a real product live, not a quick hello between segments."
+    ],
+    product: [
+      "The Strawberry Shortcake velvets look blurred and light, closer to a daily pink than a costume lip.",
+      "Three new pinks, all soft, and the plush velvet does not look heavy on camera.",
+      "These shades stay in a wearable range, sweet without turning sticky.",
+      "Velvet Lip Tint Plush in this drop looks even up close, which matters on a live."
+    ],
+    vibe: [
+      "The 10.10 live has a sweet but clean mood, very much this 3CE pink story.",
+      "Evening, strawberry shades, Santa talking through them slowly. The slot fits.",
+      "The campaign is easy to read: soft pink, quiet set, Santa on the swatch.",
+      "This feels like a proper shop live, with the tint kept in front the whole time."
+    ],
+    future: [
+      "Hope 3CE brings Santa back for the next velvet drop. This format already works.",
+      "A second Santa session would make sense if these strawberry shades move.",
+      "This does not feel like a one-off. There is room for another live in the same shape.",
+      "Next time a longer swatch block with Santa would be enough reason to open the live."
+    ],
+    extra: [
+      "The finish stays soft after the first pass.",
+      "Worth catching the swatch, not only the intro.",
+      "The set stays quiet so the color can show.",
+      "It is an easy pink to picture outside the live."
+    ]
+  },
+  th: {
+    praise: [
+      "แซนต้าอยู่บนไลฟ์ 3CE แล้วดูนิ่ง พูดเรื่องลิปได้ลื่น ไม่ต้องเร่งสี",
+      "วันนี้แซนต้าสวอชชมพูได้ชัด โทนหน้ากับเนื้อเวลเวตไปด้วยกัน",
+      "แซนต้าถือลิปแล้วสีขึ้นกล้องง่าย ไม่ต้องทำท่าเพิ่ม",
+      "จังหวะอธิบายของแซนต้าช้าพอให้แยกสามเฉดออก"
+    ],
+    collab: [
+      "แซนต้ากับ 3CE รอบสตรอว์เบอร์รีลงตัว สีชมพูใหม่เข้ากับเขาตรงๆ",
+      "คอลแลบนี้ไม่ฝืน แซนต้าทาเวลเวตแล้วสีอ่านออกก่อนคำขาย",
+      "3CE ให้แซนต้ามาสวอชชุดใหม่ เป็นจุดที่ใช่ของไลฟ์ 10.10",
+      "คู่แซนต้ากับลิปกำมะหยี่รอบนี้เป็นไลฟ์ขายของจริง ไม่ใช่แค่แวะมา"
+    ],
+    product: [
+      "สามเฉดชมพู Strawberry Shortcake ดูละมุน ใกล้แล้วยังไม่เป็นคราบ",
+      "Velvet Lip Tint Plush รอบนี้เบลอเบา ไม่ออกหนาบนไลฟ์",
+      "สีหวานแต่ยังอยู่ในช่วงที่ใช้ได้ทุกวัน ไม่ใช่แค่สีขึ้นกล้อง",
+      "สามเฉดใกล้กันพอให้เป็นชุด แต่ความลึกคนละแบบ"
+    ],
+    vibe: [
+      "ไลฟ์ 10.10 หวานแต่ยังคลีน ตามทางของ 3CE รอบนี้",
+      "เย็น ชมพูสตรอว์เบอร์รี แล้วแซนต้าค่อยๆ สวอช จังหวะพอดี",
+      "แคมเปญอ่านออกเร็ว: สีชมพู เซ็ตนิ่ง และคนสวอช",
+      "งานนี้ตั้งเป็นไลฟ์ร้านจริง ผลิตภัณฑ์อยู่หน้าตลอด"
+    ],
+    future: [
+      "รอบหน้าอยากเห็นแซนต้ากลับมาสวอชเฉดใหม่ของ 3CE อีกครั้ง",
+      "ถ้ารอบสตรอว์เบอร์รีไปได้ ขอไลฟ์แบบเดิมอีกตอน",
+      "คอลแลบนี้ไม่เหมือนจบในครั้งเดียว ยังต่อได้อีกไลฟ์",
+      "ครั้งหน้าขอช่วงสวอชนานกว่านี้หน่อย ก็พอให้เปิดไลฟ์อยู่"
+    ],
+    extra: [
+      "เนื้อหลังปาดแรกยังนุ่มอยู่",
+      "อยู่ถึงช่วงสวอชจะคุ้มกว่าแค่เปิดไลฟ์",
+      "เซ็ตไม่แย่งสี เลยเห็นลิปชัด",
+      "นึกภาพใช้หลังไลฟ์ได้ ไม่ติดแค่ในงาน"
+    ]
+  },
+  ko: {
+    praise: [
+      "산타가 3CE 라이브에서 핑크 벨벳을 바르는 모습이 과장 없이 자연스럽다.",
+      "산타가 색을 천천히 보여줘서 세 가지 핑크 차이가 보인다.",
+      "카메라 앞에서 산타의 톤이 부드러워 틴트가 더 데일리하게 읽힌다.",
+      "이번 라이브의 산타는 말이 과하지 않고 발색이 먼저 남는다."
+    ],
+    collab: [
+      "산타와 3CE는 이번 딸기 핑크 이야기와 결이 맞다.",
+      "콜라보가 단순한 만큼 벨벳 색이 먼저 보인다.",
+      "10.10 라이브에 산타를 세운 선택은 꽤 분명해 보인다.",
+      "산타 x 3CE는 짧은 인사가 아니라 제품 라이브로 성립한다."
+    ],
+    product: [
+      "스트로베리 쇼트케이크 세 색은 가까이 봐도 경계가 과하지 않다.",
+      "새 벨벳 핑크는 카메라에서 가볍게 블러되어 보인다.",
+      "달콤한 이름이지만 발색은 매일 바를 범위에 있다.",
+      "Velvet Lip Tint Plush답게 막이 두꺼워 보이지 않는다."
+    ],
+    vibe: [
+      "10.10 라이브는 달콤하면서도 화면이 정돈되어 있다.",
+      "저녁 시간이라 스트로베리 핑크가 더 부드럽게 보인다.",
+      "캠페인 색이 분명해서 스와치 구간만으로도 전달된다.",
+      "세트가 조용하고 틴트가 앞에 있는 구성이 맞다."
+    ],
+    future: [
+      "다음 벨벳에도 산타 라이브를 같은 구성으로 보고 싶다.",
+      "이 포맷은 한 번으로 끝내기에는 아직 남는다.",
+      "새 셰이드가 나오면 산타 스와치만으로도 다시 열 이유가 된다.",
+      "3CE가 이 조합을 다음 시즌까지 이어가면 좋겠다."
+    ],
+    extra: [
+      "첫 터치 후에도 마감이 부드럽다.",
+      "인트로보다 스와치 구간이 볼 만하다.",
+      "배경이 조용해서 색이 남는다.",
+      "라이브 밖에서도 상상되는 핑크다."
+    ]
+  },
+  ja: {
+    praise: [
+      "サンタさんの3CEライブは話し方がやわらかく、スウォッチが追いやすい。",
+      "ピンクのベルベットを持った時のサンタさんが自然で、色が先に見える。",
+      "盛りすぎないので、三色の差がカメラでも残る。",
+      "今回はサンタさんのテンポが遅く、比べながら見られる。"
+    ],
+    collab: [
+      "サンタさんと3CEは、この苺ピンクの話とかなり同じ方向を向いている。",
+      "コラボがシンプルなので、ベルベットの色が先に立つ。",
+      "10.10のライブにサンタさんを置いた判断は分かりやすい。",
+      "サンタさん x 3CEは、通過ではなく製品の回として成立している。"
+    ],
+    product: [
+      "ストロベリーショートケーキの三色は、近くで見ても境界がきつくない。",
+      "新しいベルベットは画面の中で軽くぼけて見える。",
+      "名前は甘いが、発色は毎日の範囲に収まっている。",
+      "Lip Tint Plushらしく、膜が厚く見えない。"
+    ],
+    vibe: [
+      "10.10のライブは甘いのに、画面は散らかっていない。",
+      "夜の時間帯が、このピンクをさらにやわらかくしている。",
+      "キャンペーンの色が決まっているので、スウォッチだけでも伝わる。",
+      "セットを足しすぎず、ティントを前に置く構成がいい。"
+    ],
+    future: [
+      "次のベルベットでも、同じ形でサンタさんのライブを見たい。",
+      "このフォーマットは一回で閉じるにはまだ残っている。",
+      "新しい色が出たら、サンタさんのスウォッチだけでも開く理由になる。",
+      "3CEがこの組み合わせを次のシーズンまで続けてほしい。"
+    ],
+    extra: [
+      "一度置いたあとも仕上がりがやわらかい。",
+      "導入よりスウォッチの方が見る価値がある。",
+      "背景が静かなので色が残る。",
+      "ライブの外でも想像できるピンクだ。"
+    ]
+  },
+  zh: {
+    praise: [
+      "Santa在3CE直播里说话很稳，试色的时候不夸张，三支粉也好认。",
+      "这轮粉色丝绒在他脸上很干净，镜头里也不花。",
+      "Santa把节奏放慢一点，三支草莓粉的差别才看得出来。",
+      "他拿着新色的时候，这场更像正常试色，不像硬插的广告。"
+    ],
+    collab: [
+      "Santa和3CE这组搭配干净，草莓粉刚好落在他的状态上。",
+      "这次合作没有堆太多话，颜色自己会先出来。",
+      "10.10把Santa放在新丝绒上，位置是清楚的。",
+      "Santa x 3CE更像一场完整的店播，不是中途露个面。"
+    ],
+    product: [
+      "Strawberry Shortcake这三支粉很柔，近看也不厚。",
+      "新的丝绒粉介于日常和上镜之间，刚刚好。",
+      "名字甜，颜色本身并不腻，模糊得很干净。",
+      "Velvet Lip Tint Plush这轮在直播里没有看起来黏。"
+    ],
+    vibe: [
+      "10.10这场直播甜，但画面仍然整齐。",
+      "晚上看这组粉色，会比白天更软一点。",
+      "活动颜色明确，只看试色也能懂这次在推什么。",
+      "背景安静，唇膏一直在前面，这个结构是对的。"
+    ],
+    future: [
+      "下一组丝绒如果还是Santa来试，我会再打开直播。",
+      "这个形式值得再做一次，不必换结构。",
+      "新色出来的时候，同样的试色段就够成为理由。",
+      "这次不像一次性合作，更像可以延续的一组。"
+    ],
+    extra: [
+      "第一层过后质地仍然软。",
+      "比起开场，试色那段更值得留下。",
+      "背景不抢，颜色才清楚。",
+      "也能想象成直播之外的一支。"
+    ]
+  },
+  es: {
+    praise: [
+      "Santa se ve comodo en el live de 3CE, y el rosa queda limpio sin forzar el swatch.",
+      "Explica las tres sombras con calma, asi que la diferencia se puede seguir.",
+      "Hay un tono suave en Santa que hace que el velvet parezca de uso real.",
+      "No corre el color, y por eso este live se puede quedar abierto."
+    ],
+    collab: [
+      "Santa y 3CE encajan en esta historia de fresa. El rosa se lee antes que el discurso.",
+      "La colaboracion queda simple: Santa, un velvet, y el live de tienda del 10.10.",
+      "Poner a Santa en el set nuevo fue una decision clara, no un cameo suelto.",
+      "Santa x 3CE parece una sesion de producto, no un saludo entre bloques."
+    ],
+    product: [
+      "Los tres rosas de Strawberry Shortcake se ven suaves de cerca, sin borde duro.",
+      "El velvet nuevo no pesa en camara y el acabado queda ligeramente borrado.",
+      "Son rosas dulces, pero siguen dentro de un rango que se puede usar de dia.",
+      "Velvet Lip Tint Plush en esta tanda no se ve pegado durante el live."
+    ],
+    vibe: [
+      "El live del 10.10 tiene un humor dulce y ordenado, muy de este rosa 3CE.",
+      "Noche, tonos fresa, Santa pasando por ellos despacio. El horario encaja.",
+      "La campana se entiende rapido: rosa suave, set quieto, swatch al frente.",
+      "Se siente como un live de tienda de verdad, no como un paso breve."
+    ],
+    future: [
+      "Ojala 3CE repita a Santa en la proxima tanda de velvet. Este formato ya funciona.",
+      "Una segunda sesion tendria sentido si estos shades de fresa se mueven.",
+      "No parece un unico pase. Hay sitio para otro live con la misma forma.",
+      "La proxima vez, un bloque de swatch mas largo con Santa seria suficiente."
+    ],
+    extra: [
+      "El acabado sigue suave despues de la primera pasada.",
+      "Conviene quedarse al swatch, no solo a la entrada.",
+      "El set esta quieto y el color puede verse.",
+      "Es un rosa facil de imaginar fuera del live."
+    ]
+  },
+  id: {
+    praise: [
+      "Santa di live 3CE kali ini rileks, dan pink velvet-nya duduk bersih tanpa pose berlebih.",
+      "Ia mengurutkan tiga shade pelan, jadi perbedaannya masih kebaca.",
+      "Ada nada lembut di Santa yang bikin tint ini terasa bisa dipakai, bukan hanya ditonton.",
+      "Ia tidak mengejar warna, makanya live-nya mudah diikuti sampai swatch."
+    ],
+    collab: [
+      "Santa dan 3CE pas untuk cerita strawberry ini. Pink-nya kebaca sebelum kalimat jual.",
+      "Kolaborasinya sederhana: Santa, velvet, dan live toko 10.10.",
+      "Menaruh Santa di set pink baru adalah pilihan yang jelas, bukan cameo singkat.",
+      "Santa x 3CE terasa seperti sesi produk, bukan sapaan di antara segmen."
+    ],
+    product: [
+      "Tiga pink Strawberry Shortcake lembut dari dekat, tanpa garis yang keras.",
+      "Velvet baru tidak terlihat berat di kamera, blur-nya ringan.",
+      "Namanya manis, tapi warnanya masih di kisaran yang bisa dipakai siang.",
+      "Velvet Lip Tint Plush di drop ini tidak terlihat lengket selama live."
+    ],
+    vibe: [
+      "Live 10.10 manis tapi tetap rapi, sesuai cerita pink 3CE kali ini.",
+      "Malam, shade stroberi, Santa membahasnya pelan. Jam-nya cocok.",
+      "Kampanyenya cepat terbaca: pink lembut, set tenang, swatch di depan.",
+      "Ini terasa seperti live toko yang sungguhan, bukan lewat sebentar."
+    ],
+    future: [
+      "Semoga 3CE membawa Santa lagi di velvet berikutnya. Format ini sudah jalan.",
+      "Sesi kedua masuk akal kalau shade stroberi ini laku.",
+      "Tidak terasa sekali lewat. Masih ada ruang untuk live dengan bentuk yang sama.",
+      "Berikutnya, blok swatch yang sedikit lebih panjang sudah cukup."
+    ],
+    extra: [
+      "Hasilnya tetap lembut setelah usapan pertama.",
+      "Lebih sayang jika hanya nonton pembuka.",
+      "Set-nya tenang, warnanya yang maju.",
+      "Pink ini mudah dibayangkan di luar live."
+    ]
+  },
+  fr: {
+    praise: [
+      "Santa est a l'aise sur le live 3CE, et le rose velvet reste net sans swatch force.",
+      "Il passe les trois teintes doucement, donc la difference se suit.",
+      "Son ton calme rend le tint portable, pas seulement joli en direct.",
+      "Il ne brule pas la couleur, et le live peut rester ouvert."
+    ],
+    collab: [
+      "Santa et 3CE vont dans le meme sens sur cette histoire fraise.",
+      "La collab reste simple: Santa, un velvet, et le live boutique du 10.10.",
+      "Le placer sur le nouveau rose etait un choix clair, pas un passage.",
+      "Santa x 3CE ressemble a une session produit, pas a un bonjour entre deux blocs."
+    ],
+    product: [
+      "Les trois roses Strawberry Shortcake restent souples de pres, sans bord dur.",
+      "Le nouveau velvet ne pese pas a l'ecran, le flou reste leger.",
+      "Le nom est gourmand, le rendu tient dans un rose de journee.",
+      "Velvet Lip Tint Plush ne parait pas colle pendant le live."
+    ],
+    vibe: [
+      "Le live du 10.10 est doux et range, tres proche de ce rose 3CE.",
+      "Soir, teintes fraise, Santa qui les deroule lentement. L'heure va.",
+      "La campagne se lit vite: rose souple, set calme, swatch devant.",
+      "Cela ressemble a un vrai live boutique, pas a une apparition courte."
+    ],
+    future: [
+      "J'aimerais revoir Santa sur le prochain velvet. Ce format tient deja.",
+      "Une deuxieme session aurait du sens si ces roses fraise partent.",
+      "Ce n'est pas un passage unique. Il reste de la place pour le meme live.",
+      "La prochaine fois, un bloc swatch un peu plus long suffirait."
+    ],
+    extra: [
+      "Le fini reste doux apres le premier passage.",
+      "Le swatch vaut plus que l'intro.",
+      "Le set est calme, la couleur peut se voir.",
+      "C'est un rose facile a imaginer hors du live."
+    ]
+  }
+};
+
+const langs = Object.keys(banks);
+const topics = ["praise", "collab", "product", "vibe", "future"];
+
+function rand(n) { return Math.floor(Math.random() * n); }
+function pick(arr) { return arr[rand(arr.length)]; }
+function pack(body) {
+  return body.replace(/\s+/g, " ").trim() + "\n\n" + KEY + "\n\n" + TAGS;
+}
+function loadUsed() {
+  try { return new Set(JSON.parse(localStorage.getItem(LS_USED) || "[]")); }
+  catch (e) { return new Set(); }
+}
+function saveUsed(set) {
+  localStorage.setItem(LS_USED, JSON.stringify(Array.from(set).slice(-2500)));
+}
+function getCount() { return Number(localStorage.getItem(LS_COUNT) || "0"); }
+function setCount(n) {
+  localStorage.setItem(LS_COUNT, String(n));
+  document.getElementById("count").textContent = "Copied: " + n + " comments";
+}
+function hash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 33 + s.charCodeAt(i)) >>> 0;
+  return String(h);
+}
+function buildOne() {
+  const lang = pick(langs);
+  const topic = pick(topics);
+  const bank = banks[lang];
+  let body = pick(bank[topic]);
+  const longer = Math.random() < 0.62;
+  if (longer) body += " " + pick(bank.extra);
+  let text = pack(body);
+  if (text.length > 270) text = pack(pick(bank[topic]));
+  if (text.length < 145) text = pack(pick(bank[topic]) + " " + pick(bank.extra));
+  if (text.length > 270) text = pack(pick(bank[topic]));
+  return text;
+}
+function nextComment() {
+  const used = loadUsed();
+  let text = "", id = "";
+  for (let i = 0; i < 50; i++) {
+    text = buildOne();
+    id = hash(text);
+    if (!used.has(id) && text.length >= 145 && text.length <= 270) break;
+  }
+  used.add(id);
+  saveUsed(used);
+  localStorage.setItem(LS_CURRENT, text);
+  return text;
+}
+function show(text) {
+  document.getElementById("out").textContent = text;
+  document.getElementById("meta").textContent = text.length + " / 280";
+}
+function toast(msg) {
+  const el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove("show"), 1400);
+}
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; }
+  catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.left = "-9999px";
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta); return ok;
+  }
+}
+async function generateAndCopy() {
+  const text = nextComment();
+  show(text);
+  const ok = await copyText(text);
+  if (ok) { setCount(getCount() + 1); toast("Copied"); }
+  else toast("Copy failed. Select the text.");
+  return text;
+}
+function openXApp(text) {
+  const msg = encodeURIComponent(text);
+  const ua = navigator.userAgent || "";
+  if (/Android/i.test(ua)) {
+    window.location.href = "intent://post?message=" + msg + "#Intent;scheme=twitter;package=com.twitter.android;end";
+    return;
+  }
+  if (/iPhone|iPad|iPod/i.test(ua)) {
+    window.location.href = "twitter://post?message=" + msg;
+    return;
+  }
+  const frame = document.createElement("iframe");
+  frame.style.display = "none";
+  frame.src = "twitter://post?message=" + msg;
+  document.body.appendChild(frame);
+  setTimeout(() => frame.remove(), 1200);
+}
+async function postX() {
+  let text = localStorage.getItem(LS_CURRENT) || "";
+  if (!text) text = await generateAndCopy();
+  openXApp(text);
+  const next = nextComment();
+  show(next);
+  copyText(next);
+  toast("Opened X. Next line ready.");
+}
+document.getElementById("gen").addEventListener("click", generateAndCopy);
+document.getElementById("post").addEventListener("click", postX);
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space" && e.target === document.body) {
+    e.preventDefault();
+    generateAndCopy();
+  }
+});
+setCount(getCount());
+const saved = localStorage.getItem(LS_CURRENT);
+if (saved) show(saved);
+</script>
+</body>
+</html>
